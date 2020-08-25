@@ -41,6 +41,7 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.WebAppSample.Controllers
                     list.Add(new RRuleHumanReadableSample() { RRule = sample, HumanReadable = recurrencePattern.ToText(cultureInfo) });
                 }
             }
+
             return View(list);
         }
 

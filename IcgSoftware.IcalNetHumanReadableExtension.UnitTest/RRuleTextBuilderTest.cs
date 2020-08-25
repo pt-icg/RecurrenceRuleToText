@@ -45,7 +45,6 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
             RRuleTextBuilderTestHelper.ToStringTest("FREQ=DAILY;INTERVAL=1;COUNT=2", "every day for 2 times");
             RRuleTextBuilderTestHelper.ToStringTest("FREQ=WEEKLY;INTERVAL=1;COUNT=1", "every week"); //jakubroztocil liefert: every week for 1 time
             RRuleTextBuilderTestHelper.ToStringTest("FREQ=MONTHLY;INTERVAL=1;UNTIL=20181023T220000Z", "every month until October 23, 2018");
-            //Assert.Pass();
         }
 
         [TestMethod]
@@ -86,7 +85,6 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
             RRuleTextBuilderTestHelper.ToStringTestG("FREQ=WEEKLY;INTERVAL=1;COUNT=1", "jede Woche"); //jakubroztocil liefert: every week for 1 time
             RRuleTextBuilderTestHelper.ToStringTestG("FREQ=MONTHLY;INTERVAL=1;UNTIL=20181023T220000Z", "jeden Monat bis zum 23. Oktober 2018");
 
-            //Assert.Pass();
         }
 
 
@@ -96,7 +94,6 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
             RRuleTextBuilderTestHelper.ToStringTest("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=MO;BYDAY=FR,TH,MO,TU,WE", "every weekday for 30 times");
             RRuleTextBuilderTestHelper.ToStringTest("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=MO;BYDAY=FR,TU,WE,TH", "every week on Tuesday, Wednesday, Thursday, Friday for 30 times");
             RRuleTextBuilderTestHelper.ToStringTest("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=SU;BYDAY=FR,TU,WE,TH,SU", "every week on Sunday, Tuesday, Wednesday, Thursday, Friday for 30 times"); //jakubroztocil liefert (keine Beachtung von Wochenanfang): every week on Tuesday, Wednesday, Thursday, Friday, Sunday for 30 times
-            //Assert.Pass();
         }
 
 
@@ -107,7 +104,6 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
             RRuleTextBuilderTestHelper.ToStringTestG("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=MO;BYDAY=FR,TH,MO,TU,WE", "jeden Wochentag 30 Mal");
             RRuleTextBuilderTestHelper.ToStringTestG("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=MO;BYDAY=FR,TU,WE,TH", "jede Woche am Dienstag, Mittwoch, Donnerstag, Freitag 30 Mal");
             RRuleTextBuilderTestHelper.ToStringTestG("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=SU;BYDAY=FR,TU,WE,TH,SU", "jede Woche am Sonntag, Dienstag, Mittwoch, Donnerstag, Freitag 30 Mal");
-            //Assert.Pass();
         }
 
 
@@ -139,7 +135,6 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
             RRuleTextBuilderTestHelper.ToStringTest("FREQ=WEEKLY;BYDAY=SU,SA,MO,TU,WE,TH,FR", "every day");
             RRuleTextBuilderTestHelper.ToStringTest("RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU", "every 2 weeks on Tuesday");
 
-            //Assert.Pass();
         }
 
         [TestMethod]
@@ -169,12 +164,8 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
             RRuleTextBuilderTestHelper.ToStringTestG("FREQ=MONTHLY;BYDAY=2FR;COUNT=7", "jeden Monat am 2. Freitag 7 Mal");
             RRuleTextBuilderTestHelper.ToStringTestG("FREQ=WEEKLY;BYDAY=SU,SA,MO,TU,WE,TH,FR", "jeden Tag");
             RRuleTextBuilderTestHelper.ToStringTestG("RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU", "alle 2 Wochen am Dienstag");
-
-            //Assert.Pass();
         }
 
-
-        //
         private class RRuleTextBuilderTestHelper
         {
             private RecurrencePattern recurrencePattern;
@@ -185,12 +176,9 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
 
             public RRuleTextBuilderTestHelper(string rRuleString, string readableString)
             {
-
                 RRuleString = rRuleString;
                 ReadableString = readableString;
                 string rRuleStringC = RRuleTextBuilder.GetRRuleStringCorrection(rRuleString);
-                //if (rRuleStringC != rRuleString)
-                //    Console.WriteLine(rRuleStringC);
                 recurrencePattern = new RecurrencePattern(rRuleStringC);
                 RecreatedRRuleString = recurrencePattern.ToString();
                 ReadableResult = recurrencePattern.ToText();
@@ -202,13 +190,9 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
                 RRuleString = rRuleString;
                 ReadableString = readableString;
                 string rRuleStringC = RRuleTextBuilder.GetRRuleStringCorrection(rRuleString);
-                //if (rRuleStringC != rRuleString)
-                //    Console.WriteLine(rRuleStringC);
                 recurrencePattern = new RecurrencePattern(rRuleStringC);
                 RecreatedRRuleString = recurrencePattern.ToString();
-                //if (culture == "de-DE")
                 if (culture == "de")
-                    //ReadableResult = recurrencePattern.ToText(new LanguagePackageFragmentTranslator(new GermanTranslation()));
                     ReadableResult = recurrencePattern.ToText(new CultureInfo(culture));
                 else
                     ReadableResult = recurrencePattern.ToText();
@@ -225,7 +209,6 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.UnitTest
 
             public static void ToStringTestG(string rRuleString, string readableString)
             {
-                //var rRuleTextBuilderTest = new RRuleTextBuilderTestHelper(rRuleString, readableString, "de-DE");
                 var rRuleTextBuilderTest = new RRuleTextBuilderTestHelper(rRuleString, readableString, "de");
                 Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
             }
