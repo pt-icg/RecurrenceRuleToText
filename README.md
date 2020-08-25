@@ -1,6 +1,8 @@
 # IcalNetHumanReadableExtension
 Human readable extension for https://github.com/rianjs/ical.net
 
+Thanks to [aditosoftware / rrule-parser](https://github.com/aditosoftware/rrule-parser).
+
 Supported languages:
 
 | Language   | Culture |
@@ -20,5 +22,3 @@ var cultureInfo = new CultureInfo("de");
 recurrencePattern.ToText(cultureInfo); //jedes Jahr am letzten Mittwoch im April
 
 ```
- 
-Thanks to [casaucao / OrdinalNumbers](https://github.com/casaucao/OrdinalNumbers).
