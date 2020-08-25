@@ -42,8 +42,8 @@
     <Reference Include="Ical.Net, Version=4.1.8.0, Culture=neutral, PublicKeyToken=65c0446cd019ea53, processorArchitecture=MSIL">
       <HintPath>..\packages\Ical.Net.4.1.11\lib\net46\Ical.Net.dll</HintPath>
     </Reference>
-    <Reference Include="IcgSoftware.IntToOrdinal, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IcgSoftware.IntToOrdinal.0.9.0\lib\netstandard2.0\IcgSoftware.IntToOrdinal.dll</HintPath>
+    <Reference Include="IcgSoftware.IntToOrdinal, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IcgSoftware.IntToOrdinal.0.9.1\lib\netstandard2.0\IcgSoftware.IntToOrdinal.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
