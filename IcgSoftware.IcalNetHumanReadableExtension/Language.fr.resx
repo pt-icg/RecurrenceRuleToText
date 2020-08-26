@@ -118,108 +118,112 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Daily" xml:space="preserve">
-    <value>jeden Tag</value>
+    <value>tous les jours</value>
   </data>
   <data name="Weekly" xml:space="preserve">
-    <value>jede Woche</value>
+    <value>toutes les semaines</value>
   </data>
   <data name="Monthly" xml:space="preserve">
-    <value>jeden Monat</value>
+    <value>tous les mois</value>
+    <comment>chaque mois</comment>
   </data>
   <data name="Yearly" xml:space="preserve">
-    <value>jedes Jahr</value>
+    <value>tous les ans</value>
+    <comment>chaque année</comment>
   </data>
   <data name="First" xml:space="preserve">
-    <value>ersten</value>
+    <value>premier</value>
   </data>
   <data name="Second" xml:space="preserve">
-    <value>zweiten</value>
+    <value>deuxième</value>
   </data>
   <data name="Third" xml:space="preserve">
-    <value>dritten</value>
+    <value>troisième</value>
   </data>
   <data name="Fourth" xml:space="preserve">
-    <value>vierten</value>
+    <value>quatrième</value>
   </data>
   <data name="Last" xml:space="preserve">
-    <value>letzten</value>
+    <value>dernier</value>
   </data>
   <data name="YearlyOnDayMonthPattern" xml:space="preserve">
-    <value>dd. MMMM</value>
+    <value>MMMM</value>
   </data>
   <data name="Monday" xml:space="preserve">
-    <value>Montag</value>
+    <value>lundi</value>
   </data>
   <data name="Tuesday" xml:space="preserve">
-    <value>Dienstag</value>
+    <value>mardi</value>
   </data>
   <data name="Wednesday" xml:space="preserve">
-    <value>Mittwoch</value>
+    <value>mercredi</value>
   </data>
   <data name="Thursday" xml:space="preserve">
-    <value>Donnerstag</value>
+    <value>jeudi</value>
   </data>
   <data name="Friday" xml:space="preserve">
-    <value>Freitag</value>
+    <value>vendredi</value>
   </data>
   <data name="Saturday" xml:space="preserve">
-    <value>Sonnabend</value>
+    <value>samedi</value>
   </data>
   <data name="Sunday" xml:space="preserve">
-    <value>Sonntag</value>
+    <value>dimanche</value>
   </data>
   <data name="CountEnding" xml:space="preserve">
-    <value>insgesamt {0} Mal</value>
+    <value>à {0} reprises</value>
+    <comment>{0} fois</comment>
   </data>
   <data name="WeeklyEveryWeekday" xml:space="preserve">
-    <value>jeden Wochentag</value>
+    <value>tous les jours</value>
   </data>
   <data name="WeeklyEveryDay" xml:space="preserve">
-    <value>jeden Tag</value>
+    <value>tous les jours</value>
   </data>
   <data name="DailyEveryNDays" xml:space="preserve">
-    <value>alle {0} Tage</value>
+    <value>tous les {0} jours</value>
   </data>
   <data name="WeeklyEveryNWeeks" xml:space="preserve">
-    <value>alle {0} Wochen</value>
+    <value>toutes les {0} semaines</value>
   </data>
   <data name="MonthlyEveryNMonths" xml:space="preserve">
-    <value>alle {0} Monate</value>
+    <value>tous les {0} mois</value>
   </data>
   <data name="YearlyEveryNYears" xml:space="preserve">
-    <value>alle {0} Jahre</value>
+    <value>tous les {0} ans</value>
   </data>
   <data name="YearlyOnNumbered" xml:space="preserve">
-    <value>am {0} {1} im {2}</value>
+    <value>le {0} {1} de {2}</value>
   </data>
   <data name="YearlyOnNumberedMonthFormat" xml:space="preserve">
     <value>MMMM</value>
   </data>
   <data name="UntilDateEnding" xml:space="preserve">
-    <value>bis zum {0}</value>
+    <value>jusqu'au {0}</value>
   </data>
   <data name="UntilDateEndingDateFormat" xml:space="preserve">
-    <value>dd. MMMM yyyy</value>
+    <value>dd MMMM yyyy</value>
   </data>
   <data name="DayChainSeparator" xml:space="preserve">
-    <value>und</value>
+    <value>et</value>
   </data>
   <data name="MonthlyOnWeekDay" xml:space="preserve">
-    <value>am {0}</value>
+    <value>le {0}</value>
   </data>
   <data name="MonthlyOnDay" xml:space="preserve">
-    <value>am {0}</value>
+    <value>le {0}</value>
   </data>
   <data name="MonthlyOnDayPlural" xml:space="preserve">
-    <value>am {0}</value>
+    <value>les {0}</value>
   </data>
   <data name="WeeklyDays" xml:space="preserve">
-    <value>am {0}</value>
+    <value>le {0}</value>
   </data>
   <data name="MonthlyOnNumberedDay" xml:space="preserve">
-    <value>am {0}</value>
+    <value>le {0}</value>
   </data>
   <data name="YearlyOnDay" xml:space="preserve">
-    <value>am {0}</value>
+    <value>le {1} {0}</value>
+    <comment>{0} month, {1} day ordinal</comment>
   </data>
 </root>

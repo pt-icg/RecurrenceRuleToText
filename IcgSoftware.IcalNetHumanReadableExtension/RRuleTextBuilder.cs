@@ -10,13 +10,8 @@ using IcgSoftware.IntToOrdinal;
 
 namespace IcgSoftware.IcalNetHumanReadableExtension
 {
-    //RRule parser
-    //Build Status
-    //RRule parser is a small java library which lets you convert a iCalendar RRule into human readable text.
-    //https://github.com/aditosoftware/rrule-parser
-    //java
 
-    //weekstart WKST noch nicht bin Wochentages
+    //weekstart WKST noch nicht in Wochentagen
     public static class RRuleTextBuilder
     {
 
@@ -31,8 +26,8 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
             {
                 cultureInfo = GetDefaultCulture();
             }
-            var tb = new RRuleTextBuilderIntern(recurrencePattern, cultureInfo);
-            return tb.ToText();
+            var rRuleTextBuilderIntern = new RRuleTextBuilderIntern(recurrencePattern, cultureInfo);
+            return rRuleTextBuilderIntern.ToText();
         }
 
         public static bool IsWeekdays(this RecurrencePattern recurrencePattern)
@@ -124,11 +119,10 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                     case FrequencyType.Daily:
                         break;
                     case FrequencyType.Weekly:
-
-                        if (recurrencePattern.IsWeekdays())
-                            resultString = Language.EVERY + " " + Language.WEEKDAY;
+                        if (recurrencePattern.IsWeekdays())                            
+                            resultString = Language.WeeklyEveryWeekday;
                         else if (recurrencePattern.IsEveryDay())
-                            resultString = Language.EVERY + " " + Language.DAY;
+                            resultString = Language.WeeklyEveryDay;
                         else
                             resultString += BuildWeeklyDays();
                         break;
@@ -187,35 +181,34 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                         //    break;
 
                         case FrequencyType.Daily:
-                            value = Language.DAILY;
+                            value = Language.Daily;
                             break;
                         case FrequencyType.Weekly:
-                            value = Language.WEEKLY;
+                            value = Language.Weekly;
                             break;
                         case FrequencyType.Monthly:
-                            value = Language.MONTHLY;
+                            value = Language.Monthly;
                             break;
                         case FrequencyType.Yearly:
-                            value = Language.YEARLY;
+                            value = Language.Yearly;
                             break;
                     }
                 }
                 else
                 {
-                    value = Language.ALL + " " + recurrencePattern.Interval + " ";
                     switch (recurrencePattern.Frequency)
                     {
                         case FrequencyType.Daily:
-                            value += Language.DAYS;
+                            value = String.Format(Language.DailyEveryNDays, recurrencePattern.Interval);
                             break;
                         case FrequencyType.Weekly:
-                            value += Language.WEEKS;
+                            value = String.Format(Language.WeeklyEveryNWeeks, recurrencePattern.Interval);
                             break;
                         case FrequencyType.Monthly:
-                            value += Language.MONTHS;
+                            value = String.Format(Language.MonthlyEveryNMonths, recurrencePattern.Interval);
                             break;
                         case FrequencyType.Yearly:
-                            value += Language.YEARS;
+                            value = String.Format(Language.YearlyEveryNYears, recurrencePattern.Interval);
                             break;
                     }
                 }
@@ -230,11 +223,8 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                 if (recurrencePattern.ByDay.Count == 0)
                     return "";
 
-                String result = " " + Language.ON + " ";
                 List<DayOfWeek> sorted = GetSortedDayOfWeeks(recurrencePattern.ByDay.Select(i => i.DayOfWeek).ToList(), recurrencePattern.FirstDayOfWeek);
-                result += string.Join(", ", sorted.Select(i => GetDayOfWeekString(i)));
-                return result;
-
+                return " " + String.Format(Language.WeeklyDays, string.Join(", ", sorted.Select(i => GetDayOfWeekString(i))));
             }
 
 
@@ -243,16 +233,13 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                 if (recurrencePattern.ByMonthDay.Count == 0)
                     return "";
 
-
                 if (recurrencePattern.ByMonthDay.Count == 1)
                 {
-                    return " " + Language.ONTHE
-                    + " " + recurrencePattern.ByMonthDay.First().ToOrdinalString(Language.Culture);
+                    return " " + string.Format(Language.MonthlyOnDay, recurrencePattern.ByMonthDay.First().ToOrdinalString(Language.Culture));
                 }
                 else
                 {
-                    return " " + Language.ONTHE
-                    + " " + GetDayChain(recurrencePattern.ByMonthDay);
+                    return " " + string.Format(Language.MonthlyOnDayPlural, GetDayChain(recurrencePattern.ByMonthDay));
                 }
 
             }
@@ -266,10 +253,10 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                     case 1:
                         return "";
                     case 2:
-                        return string.Join($" {Language.AND} ", dayList.OrderBy(i => i).Select(i => i.ToOrdinalString(Language.Culture)).ToList());
+                        return string.Join($" {Language.DayChainSeparator} ", dayList.OrderBy(i => i).Select(i => i.ToOrdinalString(Language.Culture)).ToList());
                     default:
                         var sorted = dayList.OrderBy(i => i).ToList();
-                        return string.Join(", ", sorted.Take(sorted.Count - 1).Select(i => i.ToOrdinalString(Language.Culture)).ToList()) + $" {Language.AND} " + sorted.Last().ToOrdinalString(Language.Culture);
+                        return string.Join(", ", sorted.Take(sorted.Count - 1).Select(i => i.ToOrdinalString(Language.Culture)).ToList()) + $" {Language.DayChainSeparator} " + sorted.Last().ToOrdinalString(Language.Culture);
                 }
 
             }
@@ -296,12 +283,10 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                 if (recurrencePattern.ByDay.Count == 0 || recurrencePattern.BySetPosition.Count == 0)
                     return "";
 
-                String result = " " + Language.ON;
-                result += " " + TranslateSetPosNumber(recurrencePattern.BySetPosition.First());
+                var dayValue = TranslateSetPosNumber(recurrencePattern.BySetPosition.First());
                 DayOfWeek dayOfWeek = recurrencePattern.ByDay.Select(i => i.DayOfWeek).First();
-                result += " " + GetDayOfWeekString(dayOfWeek);
-
-                return result;
+                dayValue += " " + GetDayOfWeekString(dayOfWeek);
+                return " " + String.Format(Language.MonthlyOnNumberedDay, dayValue);
             }
 
 
@@ -313,9 +298,8 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                 if (recurrencePattern.ByDay.Count == 1)
                 {
                     WeekDay wd = recurrencePattern.ByDay.First();
-                    string last = wd.Offset < 0 ? $" {Language.LAST} " : " ";
-                    return " " + Language.ONTHE
-                    + " " + Math.Abs(recurrencePattern.ByDay.First().Offset).ToOrdinalString(Language.Culture) + last + GetDayOfWeekString(wd.DayOfWeek);
+                    string last = wd.Offset < 0 ? $" {Language.Last} " : " ";
+                    return " " + String.Format(Language.MonthlyOnWeekDay, Math.Abs(recurrencePattern.ByDay.First().Offset).ToOrdinalString(Language.Culture) + last + GetDayOfWeekString(wd.DayOfWeek));
                 }
                 else
                 {
@@ -327,15 +311,15 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
             private String TranslateSetPosNumber(int number)
             {
                 if (number == -1)
-                    return Language.LAST;
+                    return Language.Last;
                 if (number == 1)
-                    return Language.FIRST;
+                    return Language.First;
                 if (number == 2)
-                    return Language.SECOND;
+                    return Language.Second;
                 if (number == 3)
-                    return Language.THIRD;
+                    return Language.Third;
                 if (number == 4)
-                    return Language.FOURTH;
+                    return Language.Fourth;
                 return "";
             }
 
@@ -344,11 +328,10 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                 if (recurrencePattern.ByMonth.Count == 0 || recurrencePattern.ByMonthDay.Count == 0)
                     return "";
 
-                String result = " " + Language.ON;
+                //DateTime day = new DateTime(DateTime.Today.Year, recurrencePattern.ByMonth.First(), recurrencePattern.ByMonthDay.First());
+                //return " " + String.Format(Language.YearlyOnDay, day.ToString(Language.YearlyOnDayPattern, Language.Culture));
                 DateTime day = new DateTime(DateTime.Today.Year, recurrencePattern.ByMonth.First(), recurrencePattern.ByMonthDay.First());
-                result += " " + day.ToString(Language.YearlyOnDayPattern, Language.Culture);
-
-                return result;
+                return " " + String.Format(Language.YearlyOnDay, day.ToString(Language.YearlyOnDayMonthPattern, Language.Culture), day.Day.ToOrdinalString(Language.Culture)).Trim();
             }
 
 
@@ -357,14 +340,12 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                 if (recurrencePattern.BySetPosition.Count == 0 && recurrencePattern.ByDay.Count == 0 && recurrencePattern.ByMonth.Count == 0)
                     return "";
 
-                String result = " " + Language.ON + " " + TranslateSetPosNumber(recurrencePattern.BySetPosition.First());
                 DayOfWeek dayOfWeek = recurrencePattern.ByDay.Select(i => i.DayOfWeek).First();
-                result += " " + GetDayOfWeekString(dayOfWeek);
-                result += " " + Language.OF;
                 DateTime day = new DateTime(DateTime.Today.Year, recurrencePattern.ByMonth.First(), 1);
-                result += " " + day.ToString(Language.YearlyOnNumbered, Language.Culture);
-
-                return result;
+                return " " + String.Format(Language.YearlyOnNumbered, 
+                    TranslateSetPosNumber(recurrencePattern.BySetPosition.First()), 
+                    GetDayOfWeekString(dayOfWeek), 
+                    day.ToString(Language.YearlyOnNumberedMonthFormat, Language.Culture));
             }
 
             private String BuildUntilDateEnding()
@@ -372,9 +353,7 @@ namespace IcgSoftware.IcalNetHumanReadableExtension
                 if (recurrencePattern.Until == DateTime.MinValue)
                     return null;
 
-                String result = Language.UNTIL;
-                result += " " + recurrencePattern.Until.ToString(Language.UntilDateEnding, Language.Culture);
-                return result;
+                return String.Format(Language.UntilDateEnding, recurrencePattern.Until.ToString(Language.UntilDateEndingDateFormat, Language.Culture));
             }
 
             private String BuildCountEnding()

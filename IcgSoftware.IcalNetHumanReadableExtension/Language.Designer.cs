@@ -61,24 +61,6 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to every.
-        /// </summary>
-        internal static string ALL {
-            get {
-                return ResourceManager.GetString("ALL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to and.
-        /// </summary>
-        internal static string AND {
-            get {
-                return ResourceManager.GetString("AND", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to for {0} times.
         /// </summary>
         internal static string CountEnding {
@@ -90,63 +72,45 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         /// <summary>
         ///   Looks up a localized string similar to every day.
         /// </summary>
-        internal static string DAILY {
+        internal static string Daily {
             get {
-                return ResourceManager.GetString("DAILY", resourceCulture);
+                return ResourceManager.GetString("Daily", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to day.
+        ///   Looks up a localized string similar to every {0} days.
         /// </summary>
-        internal static string DAY {
+        internal static string DailyEveryNDays {
             get {
-                return ResourceManager.GetString("DAY", resourceCulture);
+                return ResourceManager.GetString("DailyEveryNDays", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to days.
+        ///   Looks up a localized string similar to and.
         /// </summary>
-        internal static string DAYS {
+        internal static string DayChainSeparator {
             get {
-                return ResourceManager.GetString("DAYS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to every.
-        /// </summary>
-        internal static string EVERY {
-            get {
-                return ResourceManager.GetString("EVERY", resourceCulture);
+                return ResourceManager.GetString("DayChainSeparator", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to first.
         /// </summary>
-        internal static string FIRST {
+        internal static string First {
             get {
-                return ResourceManager.GetString("FIRST", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to for.
-        /// </summary>
-        internal static string FOR {
-            get {
-                return ResourceManager.GetString("FOR", resourceCulture);
+                return ResourceManager.GetString("First", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to fourth.
         /// </summary>
-        internal static string FOURTH {
+        internal static string Fourth {
             get {
-                return ResourceManager.GetString("FOURTH", resourceCulture);
+                return ResourceManager.GetString("Fourth", resourceCulture);
             }
         }
         
@@ -162,9 +126,9 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         /// <summary>
         ///   Looks up a localized string similar to last.
         /// </summary>
-        internal static string LAST {
+        internal static string Last {
             get {
-                return ResourceManager.GetString("LAST", resourceCulture);
+                return ResourceManager.GetString("Last", resourceCulture);
             }
         }
         
@@ -180,45 +144,54 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         /// <summary>
         ///   Looks up a localized string similar to every month.
         /// </summary>
-        internal static string MONTHLY {
+        internal static string Monthly {
             get {
-                return ResourceManager.GetString("MONTHLY", resourceCulture);
+                return ResourceManager.GetString("Monthly", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to months.
+        ///   Looks up a localized string similar to every {0} months.
         /// </summary>
-        internal static string MONTHS {
+        internal static string MonthlyEveryNMonths {
             get {
-                return ResourceManager.GetString("MONTHS", resourceCulture);
+                return ResourceManager.GetString("MonthlyEveryNMonths", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to of.
+        ///   Looks up a localized string similar to on the {0}.
         /// </summary>
-        internal static string OF {
+        internal static string MonthlyOnDay {
             get {
-                return ResourceManager.GetString("OF", resourceCulture);
+                return ResourceManager.GetString("MonthlyOnDay", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to on.
+        ///   Looks up a localized string similar to on the {0}.
         /// </summary>
-        internal static string ON {
+        internal static string MonthlyOnDayPlural {
             get {
-                return ResourceManager.GetString("ON", resourceCulture);
+                return ResourceManager.GetString("MonthlyOnDayPlural", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to on the.
+        ///   Looks up a localized string similar to on {0}.
         /// </summary>
-        internal static string ONTHE {
+        internal static string MonthlyOnNumberedDay {
             get {
-                return ResourceManager.GetString("ONTHE", resourceCulture);
+                return ResourceManager.GetString("MonthlyOnNumberedDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to on the {0}.
+        /// </summary>
+        internal static string MonthlyOnWeekDay {
+            get {
+                return ResourceManager.GetString("MonthlyOnWeekDay", resourceCulture);
             }
         }
         
@@ -234,9 +207,9 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         /// <summary>
         ///   Looks up a localized string similar to second.
         /// </summary>
-        internal static string SECOND {
+        internal static string Second {
             get {
-                return ResourceManager.GetString("SECOND", resourceCulture);
+                return ResourceManager.GetString("Second", resourceCulture);
             }
         }
         
@@ -252,9 +225,9 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         /// <summary>
         ///   Looks up a localized string similar to third.
         /// </summary>
-        internal static string THIRD {
+        internal static string Third {
             get {
-                return ResourceManager.GetString("THIRD", resourceCulture);
+                return ResourceManager.GetString("Third", resourceCulture);
             }
         }
         
@@ -268,15 +241,6 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to times.
-        /// </summary>
-        internal static string TIMES {
-            get {
-                return ResourceManager.GetString("TIMES", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Tuesday.
         /// </summary>
         internal static string Tuesday {
@@ -286,20 +250,20 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to until.
+        ///   Looks up a localized string similar to until {0}.
         /// </summary>
-        internal static string UNTIL {
+        internal static string UntilDateEnding {
             get {
-                return ResourceManager.GetString("UNTIL", resourceCulture);
+                return ResourceManager.GetString("UntilDateEnding", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to MMMM dd, yyyy.
         /// </summary>
-        internal static string UntilDateEnding {
+        internal static string UntilDateEndingDateFormat {
             get {
-                return ResourceManager.GetString("UntilDateEnding", resourceCulture);
+                return ResourceManager.GetString("UntilDateEndingDateFormat", resourceCulture);
             }
         }
         
@@ -313,52 +277,88 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to weekday.
-        /// </summary>
-        internal static string WEEKDAY {
-            get {
-                return ResourceManager.GetString("WEEKDAY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to every week.
         /// </summary>
-        internal static string WEEKLY {
+        internal static string Weekly {
             get {
-                return ResourceManager.GetString("WEEKLY", resourceCulture);
+                return ResourceManager.GetString("Weekly", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to weeks.
+        ///   Looks up a localized string similar to on {0}.
         /// </summary>
-        internal static string WEEKS {
+        internal static string WeeklyDays {
             get {
-                return ResourceManager.GetString("WEEKS", resourceCulture);
+                return ResourceManager.GetString("WeeklyDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to every day.
+        /// </summary>
+        internal static string WeeklyEveryDay {
+            get {
+                return ResourceManager.GetString("WeeklyEveryDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to every {0} weeks.
+        /// </summary>
+        internal static string WeeklyEveryNWeeks {
+            get {
+                return ResourceManager.GetString("WeeklyEveryNWeeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to every weekday.
+        /// </summary>
+        internal static string WeeklyEveryWeekday {
+            get {
+                return ResourceManager.GetString("WeeklyEveryWeekday", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to every year.
         /// </summary>
-        internal static string YEARLY {
+        internal static string Yearly {
             get {
-                return ResourceManager.GetString("YEARLY", resourceCulture);
+                return ResourceManager.GetString("Yearly", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MMMM dd.
+        ///   Looks up a localized string similar to every {0} years.
         /// </summary>
-        internal static string YearlyOnDayPattern {
+        internal static string YearlyEveryNYears {
             get {
-                return ResourceManager.GetString("YearlyOnDayPattern", resourceCulture);
+                return ResourceManager.GetString("YearlyEveryNYears", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to on {0} the {1}.
+        /// </summary>
+        internal static string YearlyOnDay {
+            get {
+                return ResourceManager.GetString("YearlyOnDay", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to MMMM.
+        /// </summary>
+        internal static string YearlyOnDayMonthPattern {
+            get {
+                return ResourceManager.GetString("YearlyOnDayMonthPattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to on {0} {1} of {2}.
         /// </summary>
         internal static string YearlyOnNumbered {
             get {
@@ -367,11 +367,11 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to years.
+        ///   Looks up a localized string similar to MMMM.
         /// </summary>
-        internal static string YEARS {
+        internal static string YearlyOnNumberedMonthFormat {
             get {
-                return ResourceManager.GetString("YEARS", resourceCulture);
+                return ResourceManager.GetString("YearlyOnNumberedMonthFormat", resourceCulture);
             }
         }
     }

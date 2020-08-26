@@ -8,6 +8,7 @@ Supported languages:
 | Language   | Culture |
 | ---------- | ------- |
 | English    | en      |
+| French     | fr      |
 | German     | de      |
 
 ### Usage example
