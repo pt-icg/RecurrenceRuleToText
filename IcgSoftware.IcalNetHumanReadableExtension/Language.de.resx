@@ -117,17 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PhraseStructure" xml:space="preserve">
+    <value>{0} {1} {2}</value>
+    <comment>{0} freq, {1} day, {2} count/until</comment>
+  </data>
+  <data name="PhraseFirstCharToUpper" xml:space="preserve">
+    <value>false</value>
+  </data>
   <data name="Daily" xml:space="preserve">
-    <value>jeden Tag</value>
+    <value>täglich</value>
+    <comment>jeden Tag</comment>
   </data>
   <data name="Weekly" xml:space="preserve">
-    <value>jede Woche</value>
+    <value>wöchentlich</value>
+    <comment>jede Woche</comment>
   </data>
   <data name="Monthly" xml:space="preserve">
-    <value>jeden Monat</value>
+    <value>monatlich</value>
+    <comment>jeden Monat</comment>
   </data>
   <data name="Yearly" xml:space="preserve">
-    <value>jedes Jahr</value>
+    <value>jährlich</value>
+    <comment>jedes Jahr</comment>
   </data>
   <data name="First" xml:space="preserve">
     <value>ersten</value>
@@ -143,6 +154,18 @@
   </data>
   <data name="Last" xml:space="preserve">
     <value>letzten</value>
+  </data>
+  <data name="LastNumeral" xml:space="preserve">
+    <value>letzten {0}</value>
+  </data>
+  <data name="SecondLastNumeral" xml:space="preserve">
+    <value>vorletzten {0}</value>
+  </data>
+  <data name="ThirdLastNumeral" xml:space="preserve">
+    <value>drittletzten {0}</value>
+  </data>
+  <data name="FourthLastNumeral" xml:space="preserve">
+    <value>viertletzten {0}</value>
   </data>
   <data name="YearlyOnDayMonthPattern" xml:space="preserve">
     <value>dd. MMMM</value>
@@ -205,6 +228,9 @@
     <value>und</value>
   </data>
   <data name="MonthlyOnWeekDay" xml:space="preserve">
+    <value>am {0}</value>
+  </data>
+  <data name="MonthlyOnWeekDayNumeral" xml:space="preserve">
     <value>am {0}</value>
   </data>
   <data name="MonthlyOnDay" xml:space="preserve">

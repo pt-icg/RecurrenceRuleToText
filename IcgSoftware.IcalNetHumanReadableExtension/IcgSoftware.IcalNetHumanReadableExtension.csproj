@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.7.2</Version>
+    <Version>0.8.0</Version>
     <Authors>pt</Authors>
     <Company>IcgSoftware</Company>
     <Description>Human readable extension for https://github.com/rianjs/ical.net</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/pt-icg/IcalNetHumanReadableExtension</PackageProjectUrl>
     <RepositoryUrl>https://github.com/pt-icg/IcalNetHumanReadableExtension</RepositoryUrl>
-    <PackageTags>rrule human-readable ical csharp</PackageTags>
+    <PackageTags>ical icalendar ical.net-extension rrule human-readable net csharp multi-language-support</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,35 +18,54 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Language.de.Designer.cs">
+      <DependentUpon>Language.de.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Language.Designer.cs">
       <DependentUpon>Language.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Language.de.Designer.cs">
+    <Compile Update="Language.en.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Language.de.resx</DependentUpon>
+      <DependentUpon>Language.en.resx</DependentUpon>
     </Compile>
     <Compile Update="Language.fr.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Language.fr.resx</DependentUpon>
     </Compile>
+    <Compile Update="Language.es.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Language.es.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Language.en.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>Language.en.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Language.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Language.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Language.de.Designer.cs</LastGenOutput>
+      <LastGenOutput>Language.de_UP.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Language.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Language.es.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.es.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

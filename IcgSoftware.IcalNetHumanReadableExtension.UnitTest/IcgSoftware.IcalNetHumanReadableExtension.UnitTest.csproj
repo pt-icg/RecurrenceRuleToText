@@ -72,8 +72,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RRuleTextBuilderTest.cs" />
+    <Compile Include="RRuleTextBuilderTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RRuleTextBuilderTestDe.cs" />
+    <Compile Include="RRuleTextBuilderTestIv.cs" />
+    <Compile Include="RRuleTextBuilderTestFr.cs" />
+    <Compile Include="RRuleTextBuilderTestEn.cs" />
+    <Compile Include="RRuleTextBuilderTestEs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

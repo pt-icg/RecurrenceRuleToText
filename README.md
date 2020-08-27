@@ -10,6 +10,7 @@ Supported languages:
 | English    | en      |
 | French     | fr      |
 | German     | de      |
+| Spanish    | es      |
 
 ### Usage example
 ```csharp

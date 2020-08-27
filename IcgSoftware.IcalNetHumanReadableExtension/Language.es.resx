@@ -125,124 +125,124 @@
     <value>false</value>
   </data>
   <data name="Daily" xml:space="preserve">
-    <value>every day</value>
+    <value>cada día</value>
   </data>
   <data name="Weekly" xml:space="preserve">
-    <value>every week</value>
+    <value>cada semana</value>
   </data>
   <data name="Monthly" xml:space="preserve">
-    <value>every month</value>
+    <value>cada mes</value>
   </data>
   <data name="Yearly" xml:space="preserve">
-    <value>every year</value>
+    <value>cada año</value>
   </data>
   <data name="First" xml:space="preserve">
-    <value>first</value>
+    <value>primer</value>
   </data>
   <data name="Second" xml:space="preserve">
-    <value>second</value>
+    <value>segundo</value>
   </data>
   <data name="Third" xml:space="preserve">
-    <value>third</value>
+    <value>tercer</value>
   </data>
   <data name="Fourth" xml:space="preserve">
-    <value>fourth</value>
+    <value>cuarto</value>
   </data>
   <data name="Last" xml:space="preserve">
-    <value>last</value>
+    <value>último</value>
   </data>
   <data name="LastNumeral" xml:space="preserve">
-    <value>last {0}</value>
+    <value>el último {0}</value>
   </data>
   <data name="SecondLastNumeral" xml:space="preserve">
-    <value>2nd last {0}</value>
+    <value>el penúltimo {0}</value>
   </data>
   <data name="ThirdLastNumeral" xml:space="preserve">
-    <value>3rd last {0}</value>
+    <value>el tercer último {0}</value>
   </data>
   <data name="FourthLastNumeral" xml:space="preserve">
-    <value>4th last {0}</value>
+    <value>el cuarto último {0}</value>
   </data>
   <data name="YearlyOnDayMonthPattern" xml:space="preserve">
     <value>MMMM</value>
   </data>
   <data name="Monday" xml:space="preserve">
-    <value>Monday</value>
+    <value>lunes</value>
   </data>
   <data name="Tuesday" xml:space="preserve">
-    <value>Tuesday</value>
+    <value>martes</value>
   </data>
   <data name="Wednesday" xml:space="preserve">
-    <value>Wednesday</value>
+    <value>miércoles</value>
   </data>
   <data name="Thursday" xml:space="preserve">
-    <value>Thursday</value>
+    <value>jueves</value>
   </data>
   <data name="Friday" xml:space="preserve">
-    <value>Friday</value>
+    <value>viernes</value>
   </data>
   <data name="Saturday" xml:space="preserve">
-    <value>Saturday</value>
+    <value>sábados</value>
   </data>
   <data name="Sunday" xml:space="preserve">
-    <value>Sunday</value>
+    <value>domingos</value>
   </data>
   <data name="CountEnding" xml:space="preserve">
-    <value>for {0} times</value>
+    <value>un total de {0} veces</value>
   </data>
   <data name="WeeklyEveryWeekday" xml:space="preserve">
-    <value>every weekday</value>
+    <value>todos los días de la semana</value>
   </data>
   <data name="WeeklyEveryDay" xml:space="preserve">
-    <value>every day</value>
+    <value>cada día</value>
   </data>
   <data name="DailyEveryNDays" xml:space="preserve">
-    <value>every {0} days</value>
+    <value>cada {0} dias</value>
   </data>
   <data name="WeeklyEveryNWeeks" xml:space="preserve">
-    <value>every {0} weeks</value>
+    <value>cada {0} semanas</value>
   </data>
   <data name="MonthlyEveryNMonths" xml:space="preserve">
-    <value>every {0} months</value>
+    <value>cada {0} meses</value>
   </data>
   <data name="YearlyEveryNYears" xml:space="preserve">
-    <value>every {0} years</value>
+    <value>cada {0} años</value>
   </data>
   <data name="YearlyOnNumbered" xml:space="preserve">
-    <value>on {0} {1} of {2}</value>
+    <value>el {0} {1} de {2}</value>
   </data>
   <data name="YearlyOnNumberedMonthFormat" xml:space="preserve">
     <value>MMMM</value>
   </data>
   <data name="UntilDateEnding" xml:space="preserve">
-    <value>until {0}</value>
+    <value>hasta el {0}</value>
   </data>
   <data name="UntilDateEndingDateFormat" xml:space="preserve">
-    <value>MMMM dd, yyyy</value>
+    <value>D</value>
   </data>
   <data name="DayChainSeparator" xml:space="preserve">
-    <value>and</value>
+    <value>y</value>
   </data>
   <data name="MonthlyOnWeekDay" xml:space="preserve">
-    <value>on the {0}</value>
+    <value>el {0}</value>
   </data>
   <data name="MonthlyOnWeekDayNumeral" xml:space="preserve">
-    <value>on the {0}</value>
+    <value>{0}</value>
   </data>
   <data name="MonthlyOnDay" xml:space="preserve">
-    <value>on the {0}</value>
+    <value>el {0}</value>
   </data>
   <data name="MonthlyOnDayPlural" xml:space="preserve">
-    <value>on the {0}</value>
+    <value>los {0}</value>
   </data>
   <data name="WeeklyDays" xml:space="preserve">
-    <value>on {0}</value>
+    <value>los {0}</value>
   </data>
   <data name="MonthlyOnNumberedDay" xml:space="preserve">
-    <value>on {0}</value>
+    <value>el {0}</value>
   </data>
   <data name="YearlyOnDay" xml:space="preserve">
-    <value>on {0} the {1}</value>
+    <value>el {1} de {0}</value>
     <comment>{0} month, {1} day ordinal</comment>
   </data>
 </root>

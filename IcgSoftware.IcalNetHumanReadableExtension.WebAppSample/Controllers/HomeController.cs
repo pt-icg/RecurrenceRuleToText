@@ -27,7 +27,7 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.WebAppSample.Controllers
             foreach (var sample in samples)
             {
                 var recurrencePattern = new RecurrencePattern(sample);
-                list.Add(new RRuleHumanReadableSample() { RRule = sample, HumanReadable = recurrencePattern.ToText() });
+                list.Add(new RRuleHumanReadableSample() { Language = RRuleTextBuilder.GetDefaultCulture().EnglishName, RRule = sample, HumanReadable = recurrencePattern.ToText() });
             }
 
             var defaultCulture = RRuleTextBuilder.GetDefaultCulture();
@@ -38,7 +38,7 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.WebAppSample.Controllers
                 foreach (var sample in samples)
                 {
                     var recurrencePattern = new RecurrencePattern(sample);
-                    list.Add(new RRuleHumanReadableSample() { RRule = sample, HumanReadable = recurrencePattern.ToText(cultureInfo) });
+                    list.Add(new RRuleHumanReadableSample() { Language = cultureInfo.EnglishName, RRule = sample, HumanReadable = recurrencePattern.ToText(cultureInfo) });
                 }
             }
 

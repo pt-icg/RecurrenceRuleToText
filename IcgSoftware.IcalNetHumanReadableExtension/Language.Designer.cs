@@ -115,6 +115,15 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 4th last {0}.
+        /// </summary>
+        internal static string FourthLastNumeral {
+            get {
+                return ResourceManager.GetString("FourthLastNumeral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friday.
         /// </summary>
         internal static string Friday {
@@ -129,6 +138,15 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         internal static string Last {
             get {
                 return ResourceManager.GetString("Last", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to last {0}.
+        /// </summary>
+        internal static string LastNumeral {
+            get {
+                return ResourceManager.GetString("LastNumeral", resourceCulture);
             }
         }
         
@@ -196,6 +214,33 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to on the {0}.
+        /// </summary>
+        internal static string MonthlyOnWeekDayNumeral {
+            get {
+                return ResourceManager.GetString("MonthlyOnWeekDayNumeral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to false.
+        /// </summary>
+        internal static string PhraseFirstCharToUpper {
+            get {
+                return ResourceManager.GetString("PhraseFirstCharToUpper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} {1} {2}.
+        /// </summary>
+        internal static string PhraseStructure {
+            get {
+                return ResourceManager.GetString("PhraseStructure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saturday.
         /// </summary>
         internal static string Saturday {
@@ -214,6 +259,15 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2nd last {0}.
+        /// </summary>
+        internal static string SecondLastNumeral {
+            get {
+                return ResourceManager.GetString("SecondLastNumeral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sunday.
         /// </summary>
         internal static string Sunday {
@@ -228,6 +282,15 @@ namespace IcgSoftware.IcalNetHumanReadableExtension {
         internal static string Third {
             get {
                 return ResourceManager.GetString("Third", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3rd last {0}.
+        /// </summary>
+        internal static string ThirdLastNumeral {
+            get {
+                return ResourceManager.GetString("ThirdLastNumeral", resourceCulture);
             }
         }
         

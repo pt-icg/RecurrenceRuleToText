@@ -7,6 +7,7 @@ namespace IcgSoftware.IcalNetHumanReadableExtension.WebAppSample.Models
 {
     public class RRuleHumanReadableSample
     {
+        public string Language { get; set; }
         public string RRule { get; set; }
         public string HumanReadable { get; set; }
     }
