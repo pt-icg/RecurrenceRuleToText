@@ -1,0 +1,16 @@
+﻿@model List<RRuleHumanReadableSample>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@foreach (var item in Model)
+{
+    <p>
+        <strong>@item.Language</strong>
+        <br />
+        <strong>@item.RRule</strong>
+        <br />
+        <code>@item.HumanReadable</code>
+    </p>
+}
