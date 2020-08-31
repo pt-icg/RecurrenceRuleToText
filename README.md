@@ -1,7 +1,7 @@
-# IcalNetHumanReadableExtension
-Human readable extension for https://github.com/rianjs/ical.net
+# RecurrenceRuleToText
+Human readable extension for [iCal.NET RecurrencePattern](https://github.com/rianjs/ical.net)
 
-Thanks to [aditosoftware / rrule-parser](https://github.com/aditosoftware/rrule-parser).
+Thanks to [aditosoftware / rrule-parser](https://github.com/aditosoftware/rrule-parser)
 
 Supported languages:
 
