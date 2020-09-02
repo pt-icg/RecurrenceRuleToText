@@ -1,4 +1,8 @@
+[![GitHub license](https://img.shields.io/github/license/pt-icg/RecurrenceRuleToText.svg)](https://github.com/pt-icg/RecurrenceRuleToText/blob/master/LICENSE)
+[![NuGet](https://img.shields.io/nuget/v/IcgSoftware.RecurrenceRuleToText.svg)](https://www.nuget.org/packages/IcgSoftware.RecurrenceRuleToText/)
+
 # RecurrenceRuleToText
+
 Human readable extension for [iCal.NET RecurrencePattern](https://github.com/rianjs/ical.net)
 
 Thanks to [aditosoftware / rrule-parser](https://github.com/aditosoftware/rrule-parser)
