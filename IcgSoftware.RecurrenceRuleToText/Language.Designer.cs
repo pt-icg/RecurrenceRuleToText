@@ -90,9 +90,9 @@ namespace IcgSoftware.RecurrenceRuleToText {
         /// <summary>
         ///   Looks up a localized string similar to and.
         /// </summary>
-        internal static string DayChainSeparator {
+        internal static string DayChainLastSeparator {
             get {
-                return ResourceManager.GetString("DayChainSeparator", resourceCulture);
+                return ResourceManager.GetString("DayChainLastSeparator", resourceCulture);
             }
         }
         
@@ -156,6 +156,15 @@ namespace IcgSoftware.RecurrenceRuleToText {
         internal static string Monday {
             get {
                 return ResourceManager.GetString("Monday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        internal static string MonthChainLastSeparator {
+            get {
+                return ResourceManager.GetString("MonthChainLastSeparator", resourceCulture);
             }
         }
         
@@ -417,6 +426,24 @@ namespace IcgSoftware.RecurrenceRuleToText {
         internal static string YearlyOnDayMonthPattern {
             get {
                 return ResourceManager.GetString("YearlyOnDayMonthPattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to in {0}.
+        /// </summary>
+        internal static string YearlyOnMonth {
+            get {
+                return ResourceManager.GetString("YearlyOnMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MMMM.
+        /// </summary>
+        internal static string YearlyOnMonthFormat {
+            get {
+                return ResourceManager.GetString("YearlyOnMonthFormat", resourceCulture);
             }
         }
         

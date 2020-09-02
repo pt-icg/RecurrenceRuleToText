@@ -75,6 +75,7 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=2", "tous les 2 mois le deuxième vendredi");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=3", "tous les 2 mois le troisième vendredi");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=4", "tous les 2 mois le quatrième vendredi");
+            ToTextTest("FREQ=YEARLY;INTERVAL=3;BYMONTH=3,4", "tous les 3 ans en mars et avril");
         }
 
         [TestMethod]

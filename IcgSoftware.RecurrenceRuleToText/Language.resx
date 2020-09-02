@@ -220,7 +220,7 @@
   <data name="UntilDateEndingDateFormat" xml:space="preserve">
     <value>MMMM dd, yyyy</value>
   </data>
-  <data name="DayChainSeparator" xml:space="preserve">
+  <data name="DayChainLastSeparator" xml:space="preserve">
     <value>and</value>
   </data>
   <data name="MonthlyOnWeekDay" xml:space="preserve">
@@ -244,5 +244,14 @@
   <data name="YearlyOnDay" xml:space="preserve">
     <value>on {0} the {1}</value>
     <comment>{0} month, {1} day ordinal</comment>
+  </data>
+  <data name="MonthChainLastSeparator" xml:space="preserve">
+    <value>and</value>
+  </data>
+  <data name="YearlyOnMonthFormat" xml:space="preserve">
+    <value>MMMM</value>
+  </data>
+  <data name="YearlyOnMonth" xml:space="preserve">
+    <value>in {0}</value>
   </data>
 </root>

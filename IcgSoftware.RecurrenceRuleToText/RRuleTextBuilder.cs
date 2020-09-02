@@ -150,6 +150,8 @@ namespace IcgSoftware.RecurrenceRuleToText
                             day += BuildYearlyOnDay();
                         else if (recurrencePattern.BySetPosition.Count > 0 && recurrencePattern.ByDay.Count > 0 && recurrencePattern.ByMonth.Count > 0)
                             day += BuildYearlyOnNumbered();
+                        else if (recurrencePattern.ByMonth.Count > 0)
+                            day += BuildYearlyOnMonth();
                         break;
                 }
 
@@ -266,10 +268,10 @@ namespace IcgSoftware.RecurrenceRuleToText
                     case 1:
                         return "";
                     case 2:
-                        return string.Join($" {Language.DayChainSeparator} ", dayList.OrderBy(i => i).Select(i => i.ToOrdinalNumber(ordinalCulture)).ToList());
+                        return string.Join($" {Language.DayChainLastSeparator} ", dayList.OrderBy(i => i).Select(i => i.ToOrdinalNumber(ordinalCulture)).ToList());
                     default:
                         var sorted = dayList.OrderBy(i => i).ToList();
-                        return string.Join(", ", sorted.Take(sorted.Count - 1).Select(i => i.ToOrdinalNumber(ordinalCulture)).ToList()) + $" {Language.DayChainSeparator} " + sorted.Last().ToOrdinalNumber(ordinalCulture);
+                        return string.Join(", ", sorted.Take(sorted.Count - 1).Select(i => i.ToOrdinalNumber(ordinalCulture)).ToList()) + $" {Language.DayChainLastSeparator} " + sorted.Last().ToOrdinalNumber(ordinalCulture);
                 }
 
             }
@@ -289,6 +291,22 @@ namespace IcgSoftware.RecurrenceRuleToText
             //    }
 
             //}
+
+            private String GetMonthChain(List<string> monthList)
+            {
+                switch (monthList.Count)
+                {
+                    case 0:
+                    case 1:                        
+                        return monthList.First();
+                    case 2:
+                        return string.Join($" {Language.MonthChainLastSeparator} ", monthList.ToList());
+                    default:
+                        var sorted = monthList.OrderBy(i => i).ToList();
+                        return string.Join(", ", monthList.Take(monthList.Count - 1)) + $" {Language.DayChainLastSeparator} " + monthList.Last();
+                }
+
+            }
 
 
             private String BuildMonthlyOnNumberedDay()
@@ -385,6 +403,16 @@ namespace IcgSoftware.RecurrenceRuleToText
                     GetDayOfWeekString(dayOfWeek),
                     day.ToString(Language.YearlyOnNumberedMonthFormat, Language.Culture));
             }
+
+            private String BuildYearlyOnMonth()
+            {
+                if (recurrencePattern.ByMonth.Count == 0)
+                    return "";
+
+                List<string> sorted = recurrencePattern.ByMonth.OrderBy(i => i).Select(i => new DateTime(DateTime.Today.Year, i, 1)).Select(i => i.ToString(Language.YearlyOnMonthFormat, Language.Culture)).ToList();
+                return String.Format(Language.YearlyOnMonth, GetMonthChain(sorted));
+            }
+
 
             private String BuildUntilDateEnding()
             {
