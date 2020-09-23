@@ -33,8 +33,8 @@
             </div>
         </div>
     </div>
-
-    <div id="recurring-rules">
+    
+    <div id="recurring-rules" style="display:none;" data-bind="visible: reccuringEvent() === 'yes'">
         <div id="frequency-select">
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label"><strong>Repeat</strong></label>
@@ -102,9 +102,9 @@
                         <div class="col-4">
                             <select id="month-byday-pos-name" class="form-control" data-bind="options: monthByDayPosName, optionsText: 'text', value: selectedMonthByDayPosName, enable: monthlyOptions() === 'monthly-precise'"></select>
                             @*TODO
-                                <option value="SU,MO,TU,WE,TH,FR,SA" selected="selected">Day</option>
-                                <option value="MO,TU,WE,TH,FR">Weekday</option>
-                                <option value="SU,SA">Weekend day</option>*@
+                            <option value="SU,MO,TU,WE,TH,FR,SA" selected="selected">Day</option>
+                            <option value="MO,TU,WE,TH,FR">Weekday</option>
+                            <option value="SU,SA">Weekend day</option>*@
                         </div>
                     </div>
                 </div>
@@ -162,9 +162,9 @@
                         <div class="col-3">
                             <select id="yearly-byday" class="form-control" data-bind="options: yearlyByDay, optionsText: 'text', value: selectedYearlyByDay, enable: yearlyOptions() === 'yearly-precise'"></select>
                             @*TODO
-                                <option value="SU,MO,TU,WE,TH,FR,SA" selected="selected">Day</option>
-                                <option value="MO,TU,WE,TH,FR">Weekday</option>
-                                <option value="SU,SA">Weekend day</option>*@
+                            <option value="SU,MO,TU,WE,TH,FR,SA" selected="selected">Day</option>
+                            <option value="MO,TU,WE,TH,FR">Weekday</option>
+                            <option value="SU,SA">Weekend day</option>*@
                         </div>
 
                         <div class="col-3">

@@ -56,7 +56,7 @@ class RruleViewModel {
 
     public rRrule: Observable<string>
     public fromRruleString: Observable<string>
-    //public reccuringEvent: Observable<string>
+    public reccuringEvent: Observable<string>
     public starttime: Observable<string>
     public frequencyies: ObservableArray<HtmlTagItem>
     public selectedFrequency: Observable<HtmlTagItem>
@@ -106,7 +106,7 @@ class RruleViewModel {
         var thisObject = this
         this.rRrule = ko.observable("")
         this.fromRruleString = ko.observable("FREQ=DAILY")
-        //this.reccuringEvent = ko.observable("no")
+        this.reccuringEvent = ko.observable("no")
 
         const today = new Date();
         //var dateTimeString = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2) + 'T18:00:00';
@@ -387,9 +387,11 @@ class RruleViewModel {
                 this.rruleOutput(result.recurrencePatternList)
                 this.rruleError(result.errorText);
                 this.rruleHint(result.hintText);
+                this.reccuringEvent('yes')
             },
             error: (XMLHttpRequest, textStatus, errorThrown) => {
                 this.rruleError(`${XMLHttpRequest.status} ${textStatus}`);
+                this.reccuringEvent('yes')
             }
         });
 
@@ -406,6 +408,7 @@ class RruleViewModel {
 
     public refresh() {
         this.getRule(0)
+        //this.reccuringEvent('yes')
     }
 
 }
