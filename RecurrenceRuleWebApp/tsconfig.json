@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "noEmitOnError": true,
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "target": "es6",
+        "importsNotUsedAsValues": "remove",
+        "baseUrl": ".", // this must be specified if "paths" is specified.
+        "paths": {
+            "ko": [ "wwwroot/lib/knockout/knockout-latest.debug" ]
+        },
+        "typeRoots": [ "wwwroot/lib/@types" ],
+        "types": [
+            "knockout",
+            "jquery"
+        ]
+    },
+    "files": [
+        "wwwroot/js/rrule-viewmodel-ts.ts"
+    ],
+    "compileOnSave": true
+}

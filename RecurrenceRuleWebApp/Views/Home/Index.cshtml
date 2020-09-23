@@ -1,0 +1,266 @@
+﻿@*@model RecurringRule*@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@*<div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>*@
+
+@*<div class="text-center">
+    <h1 class="display-4">rrule demo</h1>
+</div>*@
+
+<form asp-action="CreateRRule" asp-antiforgery="true" name="rrule-gen" id="recurring-rule">
+    @*<input type="text" id="rrule-origin" class="form-control" value="@Model.RRule" hidden >*@
+    @*<input type="text" id="rrule-origin" class="form-control" value="@Model.RRule" data-bind="value: rRrule" readonly>
+
+        <div id="rruleinput">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>from RRule string</strong></label>
+                <div class="col-sm-10">
+                    <input type="text" id="rrule-pattern" class="form-control" placeholder="e.g. FREQ=MONTHLY;BYMONTHDAY=4,6" data-bind="textInput: fromRruleString">
+                </div>
+            </div>
+        </div>*@
+
+    <div id="start-time">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><strong>Start</strong></label>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                <input type="datetime-local" id="starttime" class="form-control" data-bind="value: starttime">
+            </div>
+        </div>
+    </div>
+
+    <div id="recurring-rules">
+        <div id="frequency-select">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>Repeat</strong></label>
+                <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                    <select id="frequency" class="form-control" data-bind="options: frequencyies, optionsText: 'text', value: selectedFrequency"></select>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAILY -->
+        <div id="daily-select" data-bind="visible: selectedFrequency().value === 'daily'">
+
+        </div>
+
+        <!-- WEEKLY -->
+        <div id="weekly-select" data-bind="visible: selectedFrequency().value === 'weekly'">
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <div class="row">
+                        <div class="col-1">
+                            <label class="col-form-label">
+                                on
+                            </label>
+                        </div>
+                        <div class="col-7 d-flex flex-wrap" data-bind="foreach: weekDays">
+                            <button class="btn btn-outline-secondary" style="width:70px;" data-bind="value: $data.value, text: $data.text, class: $data.checked == true ? 'active' : '', click: $parent.toggleWeekDays"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MONTHLY -->
+        <div id="monthly-select" data-bind="visible: selectedFrequency().value === 'monthly'">
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <!-- BYMONTHDAY -->
+                    <div class="row">
+                        <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="monthly-options" id="monthly-options1" value="monthly-days" data-bind="checked: monthlyOptions">
+                                <label class="form-check-label" for="monthly-options1">
+                                    on
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-8 col-sm-9 col-md-10 col-lg-11 d-flex flex-wrap" data-bind="foreach: monthDays">
+                            <button class="btn btn-outline-secondary" style="width:40px;" data-bind="value: $data.value, text: $data.text, class: $data.checked == true ? 'active' : '', enable: $parent.monthlyOptions() === 'monthly-days', click: $parent.toggleMonthDays"></button>
+                        </div>
+                    </div>
+
+                    <!-- BYDAY -->
+                    <div class="row">
+                        <div class="col-4 col-sm-3 col-md-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="monthly-options" id="monthly-options2" value="monthly-precise" data-bind="checked: monthlyOptions">
+                                <label class="form-check-label" for="monthly-options2">
+                                    on the
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select id="month-byday-pos" class="form-control" data-bind="options: monthByDayPos, optionsText: 'text', value: selectedMonthByDayPos, enable: monthlyOptions() === 'monthly-precise'"></select>
+                        </div>
+                        <div class="col-4">
+                            <select id="month-byday-pos-name" class="form-control" data-bind="options: monthByDayPosName, optionsText: 'text', value: selectedMonthByDayPosName, enable: monthlyOptions() === 'monthly-precise'"></select>
+                            @*TODO
+                                <option value="SU,MO,TU,WE,TH,FR,SA" selected="selected">Day</option>
+                                <option value="MO,TU,WE,TH,FR">Weekday</option>
+                                <option value="SU,SA">Weekend day</option>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- YEARLY -->
+        <div id="yearly-select" data-bind="visible: selectedFrequency().value === 'yearly'">
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options1" value="yearly-one-month" data-bind="checked: yearlyOptions">
+                                <label class="form-check-label" for="yearly-options1">
+                                    One Month Out of the Year
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select id="yearly-bymonth" class="form-control" data-bind="options: yearlyByMonth, optionsText: 'text', value: selectedYearlyByMonth, enable: yearlyOptions() === 'yearly-one-month'"></select>
+                        </div>
+                        <div class="col-4">
+                            <select id="yearly-bymonth" class="form-control" data-bind="options: yearlyByMonthDay, optionsText: 'text', value: selectedYearlyByMonthDay, enable: yearlyOptions() === 'yearly-one-month'"></select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options2" value="yearly-multiple-months" data-bind="checked: yearlyOptions">
+                                <label class="form-check-label" for="yearly-options2">
+                                    Multiple Months
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex flex-wrap" id="yearly-multiple-months" data-bind="foreach: yearlyMultipleMonths">
+                            <button class="btn btn-outline-secondary" style="width:50px;" data-bind="value: $data.value, text: $data.text, class: $data.checked == true ? 'active' : '', enable: $parent.yearlyOptions() === 'yearly-multiple-months', click: $parent.toggleYearlyMultipleMonths"></button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options3" value="yearly-precise" data-bind="checked: yearlyOptions">
+                                <label class="form-check-label" for="yearly-options3">
+                                    Precise
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <select id="yearly-bysetpos" class="form-control" data-bind="options: yearlyBySetPos, optionsText: 'text', value: selectedYearlyBySetPos, enable: yearlyOptions() === 'yearly-precise'"></select>
+                        </div>
+                        <div class="col-3">
+                            <select id="yearly-byday" class="form-control" data-bind="options: yearlyByDay, optionsText: 'text', value: selectedYearlyByDay, enable: yearlyOptions() === 'yearly-precise'"></select>
+                            @*TODO
+                                <option value="SU,MO,TU,WE,TH,FR,SA" selected="selected">Day</option>
+                                <option value="MO,TU,WE,TH,FR">Weekday</option>
+                                <option value="SU,SA">Weekend day</option>*@
+                        </div>
+
+                        <div class="col-3">
+                            <div class="row">
+                                <label class="col-form-label col-2" for="yearly-bymonth-with-bysetpos-byday">
+                                    in
+                                </label>
+                                <select id="yearly-bymonth-with-bysetpos-byday" class="form-control col-10" data-bind="options: yearlyByMonthWithBySetPosByDay, optionsText: 'text', value: selectedYearlyByMonthWithBySetPosByDay, enable: yearlyOptions() === 'yearly-precise'"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="every-rules">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>Every</strong></label>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                    <input type="number" id="everyrule-interval" class="form-control" autocomplete="off" min="1" value="1" step="1" data-bind="value: everyRuleInterval">
+                </div>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-form-label" id="every-frequency-rules">
+                    <label id="every-rules-days" data-bind="visible: selectedFrequency().value === 'daily'">day(s)</label>
+                    <label id="every-rules-weeks" data-bind="visible: selectedFrequency().value === 'weekly'">week(s)</label>
+                    <label id="every-rules-months" data-bind="visible: selectedFrequency().value === 'monthly'">month(s)</label>
+                    <label id="every-rules-years" data-bind="visible: selectedFrequency().value === 'yearly'">year(s)</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="end-rules">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>End</strong></label>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-3">
+                    <select id="end-rule-select" class="form-control" data-bind="options: endRule, optionsText: 'text', value: selectedEndRule"></select>
+                </div>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-3">
+                    <input type="number" id="end-rule-occurrences" class="form-control" autocomplete="off" min="1" max="50" value="1" step="1" data-bind="value: endRuleOccurrences, visible: selectedEndRule().value === 'occurrences'" />
+                    <input type="date" id="end-rule-until" class="form-control" data-bind="value: endRuleUntil, visible: selectedEndRule().value === 'until'">
+                </div>
+
+            </div>
+        </div>
+
+        <div id="rrule-result">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>RRule</strong></label>
+                <div class="col-sm-10 col-form-label">
+                    <div data-bind="html: rruleCode"></div>
+                </div>
+                <div class="col-sm-10 offset-sm-2 col-form-label">
+                    <div data-bind="html: rruleText"></div>
+                </div>
+                <label class="col-sm-2 col-form-label"><strong>Output</strong></label>
+                <div class="col-sm-10" id="rrulelist">
+                    <table data-bind="foreach: rruleOutput">
+                        <tr>
+                            <td style="padding:0 10px 0 0;" data-bind="html: $data[0]"></td>
+                            <td style="padding:0 10px 0 10px;" data-bind="html: $data[1]"></td>
+                            <td style="padding:0 10px 0 10px;" data-bind="html: $data[2]"></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="rruleerror" data-bind="visible: rruleError().length > 0">
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <input type="text" class="form-control is-invalid" style="display:none;">
+                    <div id="rruletext-invalid" class="invalid-feedback" data-bind="html: rruleError"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rrulehint" data-bind="visible: rruleHint().length > 0">
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <input type="text" class="form-control is-invalid" style="display:none;">
+                    <div id="rruletext-hint" class="invalid-feedback" data-bind="html: rruleHint"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+@section scripts {
+
+    <script src="~/lib/knockout/knockout-latest.debug.js"></script>
+    <script type="module" src="~/js/rrule-viewmodel-ts.js"></script>
+    <script type="module">
+        import { viewModel } from "/js/rrule-viewmodel-ts.js";
+        @*viewModel.fromRruleString('@Model.RRule');*@
+        viewModel.refresh();
+    </script>
+}

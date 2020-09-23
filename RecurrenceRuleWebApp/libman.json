@@ -1,0 +1,25 @@
+{
+    "version": "1.0",
+    "defaultProvider": "cdnjs",
+    "libraries": [
+        {
+            "library": "knockout@3.5.1",
+            "destination": "wwwroot/lib/knockout/"
+        },
+        {
+            "provider": "unpkg",
+            "library": "@types/knockout@3.4.53",
+            "destination": "wwwroot/lib/@types/knockout/"
+        },
+        {
+            "provider": "unpkg",
+            "library": "@types/jquery@3.5.1",
+            "destination": "wwwroot/lib/@types/jquery/"
+        },
+        {
+            "provider": "unpkg",
+            "library": "@types/sizzle@2.3.2",
+            "destination": "wwwroot/lib/@types/sizzle/"
+        }
+    ]
+}
