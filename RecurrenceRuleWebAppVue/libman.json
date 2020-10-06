@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+    "libraries": [
+        {
+            "provider": "jsdelivr",
+            "library": "vue@2.6.12",
+            "destination": "wwwroot/lib/vue/",
+            "files": [
+                "types/index.d.ts",
+                "types/options.d.ts",
+                "types/plugin.d.ts",
+                "types/umd.d.ts",
+                "types/vnode.d.ts",
+                "types/vue.d.ts"
+            ]
+        },
+        {
+            "provider": "jsdelivr",
+            "library": "axios@0.20.0",
+            "destination": "wwwroot/lib/axios/",
+            "files": [
+                "index.d.ts"
+            ]
+        }
+        //,
+        //{
+        //    "library": "@types/jquery@3.5.1",
+        //    "destination": "wwwroot/lib/@types/jquery/"
+        //},
+        //{
+        //    "library": "@types/sizzle@2.3.2",
+        //    "destination": "wwwroot/lib/@types/sizzle/"
+        //}
+    ]
+}

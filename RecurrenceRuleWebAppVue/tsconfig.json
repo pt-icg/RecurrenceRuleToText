@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "noEmitOnError": true,
+        "noImplicitAny": false,
+        "moduleResolution": "Node",
+        "sourceMap": true,
+        "target": "es6",
+        "importsNotUsedAsValues": "remove",
+        //"allowSyntheticDefaultImports": true,
+        //"baseUrl": ".", // this must be specified if "paths" is specified.
+        //"paths": {
+        //    "ko": [ "wwwroot/lib/knockout/knockout-latest.debug" ]
+        //},
+        //"typeRoots": [ "wwwroot/lib/@types" ],
+        //"types": [
+        //    "jquery",
+        //    "sizzle"
+        //],
+        "outDir": "wwwroot/js"
+    },
+    "include": [
+        "wwwroot/ts/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "compileOnSave": true
+}

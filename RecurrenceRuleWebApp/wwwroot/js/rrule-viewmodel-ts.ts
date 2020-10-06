@@ -366,20 +366,7 @@ class RruleViewModel {
             type: 'POST',
             url: '/Home/CreateRRule',
             contentType: 'application/json; charset=utf-8',
-            //headers: {
-            //    "CSRF-TOKEN-MOONGLADE-FORM": $('input[name="CSRF-TOKEN-MOONGLADE-FORM"]').val()
-            //},            
-            //headers = {
-            //    "__RequestVerificationToken": antiForgeryToken
-            //},            
-            //headers = '"__RequestVerificationToken": antiForgeryToken,'
-            //headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
             headers: { "RequestVerificationToken": `${antiForgeryToken}` },
-            //data: {
-            //    __RequestVerificationToken: antiForgeryToken,
-            //    rRuleWrapper: rRuleWrapper
-            //},
-            //dataType: 'JSON',            
             data: JSON.stringify(rRuleWrapper),
             success: (result) => {
                 this.rruleCode(result.recurrencePatternString)

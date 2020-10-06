@@ -1,0 +1,336 @@
+﻿@{
+    ViewData["Title"] = "rrule demo";
+}
+
+<style>
+    [v-cloak] {
+        display: none;
+    }
+
+    .mobileHoverFix:hover,
+    .mobileHoverFix.hover {
+        background-color: #337ab7;
+        background-color: #ffffff;
+        color: #6c757d;
+    }
+</style>
+
+<form asp-action="CreateRRule" asp-antiforgery="true" name="rrule-gen" id="recurring-rule" v-on:submit.prevent>
+    @*<input type="text" id="rrule-origin" class="form-control" value="@Model.RRule" hidden >*@
+    @*<input type="text" id="rrule-origin" class="form-control" value="@Model.RRule" data-bind="value: rRrule" readonly>
+
+        <div id="rruleinput">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>from RRule string</strong></label>
+                <div class="col-sm-10">
+                    <input type="text" id="rrule-pattern" class="form-control" placeholder="e.g. FREQ=MONTHLY;BYMONTHDAY=4,6" data-bind="textInput: fromRruleString">
+                </div>
+            </div>
+        </div>*@
+
+    <div id="start-time">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><strong>Start</strong></label>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                <input type="datetime-local" id="starttime" class="form-control" v-model="Starttime">
+            </div>
+        </div>
+    </div>
+    @*<div id="recurring-rules" style="display:none;" data-bind="visible: reccuringEvent() === 'yes'">*@
+    @*<input :style="{visibility: showMore ? 'visible' : 'hidden'}" ...>*@
+    @*<input type="datetime-local" id="starttime2" class="form-control" v-model="Starttime" v-show="ShowReccuringEvent">*@
+    @*<h1 v-if="ShowY">ShowY</h1>
+        <h1 v-if="ShowN">ShowN</h1>
+        <h1 v-show="IfY">IfY</h1>
+        <h1 v-show="IfN">IfN</h1>
+            <div id="recurring-rules" style="display:none;" v-if="ShowReccuringEvent">
+
+        <div id="recurring-rules" v-if="ShowReccuringEvent" style="display:none;">
+    *@
+    @*v-cloak hat keine Wirkung!*@
+
+
+    <div id="recurring-rules" v-show="ShowReccuringEvent" v-cloak>
+
+        <div id="frequency-select">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>Repeat</strong></label>
+                <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                    <select id="frequency" class="form-control" v-model="SelectedFrequency" v-on:change="SubmitForm()">
+                        <option v-for="i in Frequencyies" v-bind:value="i.value">{{i.text}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAILY -->
+        <div id="daily-select" v-show="SelectedFrequency === 'daily'">
+            @*<h1>DAILY</h1>*@
+        </div>
+
+        <!-- WEEKLY -->
+        <div id="weekly-select" v-show="SelectedFrequency === 'weekly'">
+            @*<h1>WEEKLY</h1>*@
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <div class="row">
+                        <div class="col-1">
+                            <label class="col-form-label">
+                                on
+                            </label>
+                        </div>
+                        @*<div class="col-7 d-flex flex-wrap">
+                            <button class="btn btn-outline-secondary" style="width:70px;" v-for="item in WeekDays" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }">
+                                {{ item.text }}
+                            </button>
+                        </div>*@
+                        <div class="col-7 d-flex flex-wrap">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary" style="width:70px;" v-for="item in WeekDays" v-on:click="Toggle(item)">
+                                    <input type="checkbox" autocomplete="off">{{ item.text }}
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MONTHLY -->
+        <div id="monthly-select" v-show="SelectedFrequency === 'monthly'">
+            @*<h1>MONTHLY</h1>*@
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <!-- BYMONTHDAY -->
+                    <div class="row">
+                        <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="monthly-options" id="monthly-options1" value="monthly-days" v-model="MonthlyOptions" v-on:change="SubmitForm()">
+                                <label class="form-check-label" for="monthly-options1">
+                                    on
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-8 col-sm-9 col-md-10 col-lg-11 d-flex flex-wrap">
+                            @*<button class="btn btn-outline-secondary" style="width:40px;" v-for="item in MonthDays" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }" v-bind:disabled="MonthlyOptions !== 'monthly-days'">
+                                {{ item.text }}
+                            </button>*@
+                            <div class="btn-group-toggle" data-toggle="buttons" v-bind:disabled="MonthlyOptions !== 'monthly-days'">
+                                <label class="btn btn-outline-secondary" style="width:40px;" v-for="item in MonthDays" v-on:click="Toggle(item)">
+                                    <input type="checkbox" autocomplete="off">{{ item.text }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BYDAY -->
+                    <div class="row">
+                        <div class="col-4 col-sm-3 col-md-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="monthly-options" id="monthly-options2" value="monthly-precise" v-model=" MonthlyOptions" v-on:change="SubmitForm()">
+                                <label class="form-check-label" for="monthly-options2">
+                                    on the
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select id="month-byday-pos" class="form-control" v-model="SelectedMonthByDayPos" v-on:change="SubmitForm()" v-bind:disabled="MonthlyOptions !== 'monthly-precise'">
+                                <option v-for="item in MonthByDayPos" v-bind:value="item.value">{{item.text}}</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <select id="month-byday-pos-name" class="form-control" v-model="SelectedMonthByDayPosName" v-on:change="SubmitForm()" v-bind:disabled="MonthlyOptions !== 'monthly-precise'">
+                                <option v-for="item in MonthByDayPosName" v-bind:value="item.value">{{item.text}}</option>
+                            </select>
+                            @*TODO
+                                <option value="SU,MO,TU,WE,TH,FR,SA" selected="selected">Day</option>
+                                <option value="MO,TU,WE,TH,FR">Weekday</option>
+                                <option value="SU,SA">Weekend day</option>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- YEARLY -->
+        <div id="yearly-select" v-show="SelectedFrequency === 'yearly'">
+            @*<h1>YEARLY</h1>*@
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options1" value="yearly-one-month" v-model="YearlyOptions" v-on:change="SubmitForm()">
+                                <label class="form-check-label" for="yearly-options1">
+                                    One Month Out of the Year
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select id="yearly-bymonth" class="form-control" v-model="SelectedYearlyByMonth" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-one-month'">
+                                <option v-for="item in YearlyByMonth" v-bind:value="item.value">{{item.text}}</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <select id="yearly-bymonth-day" class="form-control" v-model="SelectedYearlyByMonthDay" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-one-month'">
+                                <option v-for="item in YearlyByMonthDay" v-bind:value="item.value">{{item.text}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options2" value="yearly-multiple-months" v-model="YearlyOptions" v-on:change="SubmitForm()">
+                                <label class="form-check-label" for="yearly-options2">
+                                    Multiple Months
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-10 d-flex flex-wrap" id="yearly-multiple-months">
+                            @*<button class="btn btn-outline-secondary" style="width:50px;" v-for="item in YearlyMultipleMonths" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'">
+                                {{ item.text }}
+                            </button>*@
+                            <div class="btn-group-toggle" data-toggle="buttons" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'">
+                                <label class="btn btn-outline-secondary" style="width:50px;" v-for="item in YearlyMultipleMonths" v-on:click="Toggle(item)">
+                                    <input type="checkbox" autocomplete="off">{{ item.text }}
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options3" value="yearly-precise" v-model="YearlyOptions" v-on:change="SubmitForm()">
+                                <label class="form-check-label" for="yearly-options3">
+                                    Precise
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <select id="yearly-bysetpos" class="form-control" v-model="SelectedYearlyBySetPos" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
+                                <option v-for="item in YearlyBySetPos" v-bind:value="item.value">{{item.text}}</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <select id="yearly-byday" class="form-control" v-model="SelectedYearlyByDay" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
+                                <option v-for="item in YearlyByDay" v-bind:value="item.value">{{item.text}}</option>
+                            </select>
+                            @*TODO
+                                <option value="SU,MO,TU,WE,TH,FR,SA" selected="selected">Day</option>
+                                <option value="MO,TU,WE,TH,FR">Weekday</option>
+                                <option value="SU,SA">Weekend day</option>*@
+                        </div>
+
+                        <div class="col-4">
+                            <div class="row">
+                                <label class="col-form-label col-2" for="yearly-bymonth-with-bysetpos-byday">
+                                    in
+                                </label>
+                                <select id="yearly-bymonth-with-bysetpos-byday" class="form-control" v-model="SelectedYearlyByMonthWithBySetPosByDay" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
+                                    <option v-for="item in YearlyByMonthWithBySetPosByDay" v-bind:value="item.value">{{item.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="every-rules">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>Every</strong></label>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3">
+                    <input type="number" id="everyrule-interval" class="form-control" autocomplete="off" min="1" value="1" step="1" v-model="EveryRuleInterval" v-on:change="SubmitForm()">
+                </div>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-form-label" id="every-frequency-rules">
+                    <label id="every-rules-days" v-if="SelectedFrequency === 'daily'">day(s)</label>
+                    <label id="every-rules-weeks" v-if="SelectedFrequency === 'weekly'">week(s)</label>
+                    <label id="every-rules-months" v-if="SelectedFrequency === 'monthly'">month(s)</label>
+                    <label id="every-rules-years" v-if="SelectedFrequency === 'yearly'">year(s)</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="end-rules">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>End</strong></label>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-3">
+                    <select id="end-rule-select" class="form-control" v-model="SelectedEndRule" v-on:change="SubmitForm()">
+                        <option v-for="item in EndRules" v-bind:value="item.value">{{item.text}}</option>
+                    </select>
+                </div>
+                <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-3">
+                    <input type="number" id="end-rule-occurrences" class="form-control" autocomplete="off" min="1" max="50" value="1" step="1" v-model="EndRuleOccurrences" v-if="SelectedEndRule === 'occurrences'" v-on:change="SubmitForm()" />
+                    <input type="date" id="end-rule-until" class="form-control" v-model="EndRuleUntil" v-if="SelectedEndRule === 'until'" v-on:change="SubmitForm()" />
+                </div>
+
+            </div>
+        </div>
+
+        <div id="rrule-result">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"><strong>RRule</strong></label>
+                <div class="col-sm-10 col-form-label">
+                    <div>{{ RRuleCode }}</div>
+                </div>
+                <div class="col-sm-10 offset-sm-2 col-form-label">
+                    <div>{{ RRuleText }}</div>
+                </div>
+                <label class="col-sm-2 col-form-label"><strong>Output</strong></label>
+                <div class="col-sm-10" id="rrulelist">
+                    <table>
+                        <tr v-for="item in RRuleOutput">
+                            <td style="padding:0 10px 0 0;">{{ item[0] }}</td>
+                            <td style="padding:0 10px 0 10px;">{{ item[1] }}</td>
+                            <td style="padding:0 10px 0 10px;">{{ item[2] }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="rrule-error" v-if="RRuleError.length > 0">
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <input type="text" class="form-control is-invalid" style="display:none;">
+                    <div id="rruleerror" class="invalid-feedback">{{ RRuleError }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rrule-hint" v-if="RRuleHint.length > 0">
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <input type="text" class="form-control is-invalid" style="display:none;">
+                    <div id="rrulehint" class="invalid-feedback">{{ RRuleHint }}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <environment include="Development">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="~/js/site.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+        <script src="~/js/site.js"></script>
+    </environment>
+
+    <script type="module" src="~/js/vuetest.js"></script>
+}
