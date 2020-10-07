@@ -1,7 +1,9 @@
 ﻿//https://levelup.gitconnected.com/enhance-your-http-request-with-axios-and-typescript-f52a6c6c2c8e
+//https://medium.com/@enetoOlveda/how-to-use-axios-typescript-like-a-pro-7c882f71e34a
 import { AxiosRequestConfig } from "../lib/axios/index";
 import { HttpClient } from './http-client-base.js';
-import { RRuleWrapperOld, RRuleResult } from "./RRuleTypes";
+//import { RRuleWrapperOld, RRuleResult, RecurrencePattern } from "./RRuleTypes";
+import { RRuleWrapper, RRuleResult, RecurrencePattern } from "./RRuleTypes";
 
 export class RRuleHttpClient extends HttpClient {
     protected readonly config: AxiosRequestConfig;
@@ -29,6 +31,8 @@ export class RRuleHttpClient extends HttpClient {
         return config;
     };
 
-    public createRRule = (data) => this.instance.post<RRuleWrapperOld, RRuleResult>('/Home/CreateRRule', data);
-
+    public createRRule = (data) => this.instance.post<RRuleWrapper, RRuleResult>('/Home/CreateRRule', data);
+    //public getRecurrencePattern = (data) => this.instance.get<string, RecurrencePattern>('/Home/GetRecurrencePattern', data);
+    public getRecurrencePattern = (rrule: string) => this.instance.get<RecurrencePattern, RecurrencePattern>(`Home/GetRecurrencePattern?RRule=${encodeURI(rrule)}`);    
+    //public getRecurrencePattern = (rrule: string) => this.instance.get<RecurrencePattern>(`Home/GetRecurrencePattern?RRule=${encodeURI(rrule)}`);   
 }

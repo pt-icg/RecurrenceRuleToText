@@ -32,7 +32,14 @@ namespace RecurrenceRuleWebAppVue
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                //.AddJsonOptions(options => options.UseMemberCasing())
+                .AddJsonOptions(options =>
+                {
+                    //options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                    options.UseMemberCasing(); //kein camelCase...
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

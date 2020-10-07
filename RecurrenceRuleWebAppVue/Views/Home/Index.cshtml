@@ -28,6 +28,15 @@
             </div>
         </div>*@
 
+    <div id="rrule-input">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><strong>Input</strong></label>
+            <div class="col-sm-10 col-form-label">
+                <input type="text" id="rrule-code" class="form-control" v-model="NewRRuleCode" placeholder="e.g. FREQ=WEEKLY;COUNT=30;BYDAY=TU" v-on:keyup.enter="SetRuleByCode()">                
+            </div>
+        </div>
+    </div>
+
     <div id="start-time">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"><strong>Start</strong></label>
@@ -56,7 +65,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label"><strong>Repeat</strong></label>
                 <div class="col-12 col-sm-5 col-md-4 col-lg-3">
-                    <select id="frequency" class="form-control" v-model="SelectedFrequency" v-on:change="SubmitForm()">
+                    <select id="frequency" class="form-control" v-model="SelectedFrequency" v-on:change="SubmitRRuleValues()">
                         <option v-for="i in Frequencyies" v-bind:value="i.value">{{i.text}}</option>
                     </select>
                 </div>
@@ -79,18 +88,27 @@
                                 on
                             </label>
                         </div>
-                        @*<div class="col-7 d-flex flex-wrap">
+                        <div class="col-7 d-flex flex-wrap">
                             <button class="btn btn-outline-secondary" style="width:70px;" v-for="item in WeekDays" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }">
                                 {{ item.text }}
                             </button>
-                        </div>*@
-                        <div class="col-7 d-flex flex-wrap">
-                            <div class="btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-outline-secondary" style="width:70px;" v-for="item in WeekDays" v-on:click="Toggle(item)">
-                                    <input type="checkbox" autocomplete="off">{{ item.text }}
-                                </label>
-                            </div>
                         </div>
+                        @*<div class="col-7 d-flex flex-wrap">
+                                <div class="btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-outline-secondary" style="width:170px;" v-for="item in WeekDays" v-on:click="Toggle(item)" v-bind:class="{active: item.checked}">
+                                        <input type="checkbox" autocomplete="off">{{ item.text }}
+                                        <input type="checkbox" autocomplete="off" v-model="item.checked">{{ item.text + ' ' + item.checked}}
+                                        <input type="checkbox" autocomplete="off">{{ item.text + ' [' + item.checked + ']'}}
+                                    </label>
+                                </div>
+                            </div>*@
+                        @*<div class="col-7 d-flex flex-wrap">
+                                <div class="btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-outline-secondary" style="width:170px;" v-for="item in WeekDays" v-on:click="Toggle(item)" v-bind:class="{active: item.checked}">
+                                        <input type="checkbox" autocomplete="off" v-model="WeekDays" value="{item.value}">{{ item.text + ' [' + item.checked + ']'}}
+                                    </label>
+                                </div>
+                            </div>*@
 
                     </div>
                 </div>
@@ -106,21 +124,21 @@
                     <div class="row">
                         <div class="col-4 col-sm-3 col-md-2 col-lg-1">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="monthly-options" id="monthly-options1" value="monthly-days" v-model="MonthlyOptions" v-on:change="SubmitForm()">
+                                <input class="form-check-input" type="radio" name="monthly-options" id="monthly-options1" value="monthly-days" v-model="MonthlyOptions" v-on:change="SubmitRRuleValues()">
                                 <label class="form-check-label" for="monthly-options1">
                                     on
                                 </label>
                             </div>
                         </div>
                         <div class="col-8 col-sm-9 col-md-10 col-lg-11 d-flex flex-wrap">
-                            @*<button class="btn btn-outline-secondary" style="width:40px;" v-for="item in MonthDays" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }" v-bind:disabled="MonthlyOptions !== 'monthly-days'">
+                            <button class="btn btn-outline-secondary" style="width:40px;" v-for="item in MonthDays" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }" v-bind:disabled="MonthlyOptions !== 'monthly-days'">
                                 {{ item.text }}
-                            </button>*@
-                            <div class="btn-group-toggle" data-toggle="buttons" v-bind:disabled="MonthlyOptions !== 'monthly-days'">
-                                <label class="btn btn-outline-secondary" style="width:40px;" v-for="item in MonthDays" v-on:click="Toggle(item)">
-                                    <input type="checkbox" autocomplete="off">{{ item.text }}
-                                </label>
-                            </div>
+                            </button>
+                            @*<div class="btn-group-toggle" data-toggle="buttons" v-bind:disabled="MonthlyOptions !== 'monthly-days'">
+                                    <label class="btn btn-outline-secondary" style="width:40px;" v-for="item in MonthDays" v-on:click="Toggle(item)">
+                                        <input type="checkbox" autocomplete="off">{{ item.text }}
+                                    </label>
+                                </div>*@
                         </div>
                     </div>
 
@@ -128,19 +146,19 @@
                     <div class="row">
                         <div class="col-4 col-sm-3 col-md-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="monthly-options" id="monthly-options2" value="monthly-precise" v-model=" MonthlyOptions" v-on:change="SubmitForm()">
+                                <input class="form-check-input" type="radio" name="monthly-options" id="monthly-options2" value="monthly-precise" v-model=" MonthlyOptions" v-on:change="SubmitRRuleValues()">
                                 <label class="form-check-label" for="monthly-options2">
                                     on the
                                 </label>
                             </div>
                         </div>
                         <div class="col-4">
-                            <select id="month-byday-pos" class="form-control" v-model="SelectedMonthByDayPos" v-on:change="SubmitForm()" v-bind:disabled="MonthlyOptions !== 'monthly-precise'">
+                            <select id="month-byday-pos" class="form-control" v-model="SelectedMonthByDayPos" v-on:change="SubmitRRuleValues()" v-bind:disabled="MonthlyOptions !== 'monthly-precise'">
                                 <option v-for="item in MonthByDayPos" v-bind:value="item.value">{{item.text}}</option>
                             </select>
                         </div>
                         <div class="col-4">
-                            <select id="month-byday-pos-name" class="form-control" v-model="SelectedMonthByDayPosName" v-on:change="SubmitForm()" v-bind:disabled="MonthlyOptions !== 'monthly-precise'">
+                            <select id="month-byday-pos-name" class="form-control" v-model="SelectedMonthByDayPosName" v-on:change="SubmitRRuleValues()" v-bind:disabled="MonthlyOptions !== 'monthly-precise'">
                                 <option v-for="item in MonthByDayPosName" v-bind:value="item.value">{{item.text}}</option>
                             </select>
                             @*TODO
@@ -162,19 +180,19 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options1" value="yearly-one-month" v-model="YearlyOptions" v-on:change="SubmitForm()">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options1" value="yearly-one-month" v-model="YearlyOptions" v-on:change="SubmitRRuleValues()">
                                 <label class="form-check-label" for="yearly-options1">
                                     One Month Out of the Year
                                 </label>
                             </div>
                         </div>
                         <div class="col-4">
-                            <select id="yearly-bymonth" class="form-control" v-model="SelectedYearlyByMonth" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-one-month'">
+                            <select id="yearly-bymonth" class="form-control" v-model="SelectedYearlyByMonth" v-on:change="SubmitRRuleValues()" v-bind:disabled="YearlyOptions !== 'yearly-one-month'">
                                 <option v-for="item in YearlyByMonth" v-bind:value="item.value">{{item.text}}</option>
                             </select>
                         </div>
                         <div class="col-4">
-                            <select id="yearly-bymonth-day" class="form-control" v-model="SelectedYearlyByMonthDay" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-one-month'">
+                            <select id="yearly-bymonth-day" class="form-control" v-model="SelectedYearlyByMonthDay" v-on:change="SubmitRRuleValues()" v-bind:disabled="YearlyOptions !== 'yearly-one-month'">
                                 <option v-for="item in YearlyByMonthDay" v-bind:value="item.value">{{item.text}}</option>
                             </select>
                         </div>
@@ -183,21 +201,21 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options2" value="yearly-multiple-months" v-model="YearlyOptions" v-on:change="SubmitForm()">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options2" value="yearly-multiple-months" v-model="YearlyOptions" v-on:change="SubmitRRuleValues()">
                                 <label class="form-check-label" for="yearly-options2">
                                     Multiple Months
                                 </label>
                             </div>
                         </div>
                         <div class="col-10 d-flex flex-wrap" id="yearly-multiple-months">
-                            @*<button class="btn btn-outline-secondary" style="width:50px;" v-for="item in YearlyMultipleMonths" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'">
+                            <button class="btn btn-outline-secondary" style="width:50px;" v-for="item in YearlyMultipleMonths" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'">
                                 {{ item.text }}
-                            </button>*@
-                            <div class="btn-group-toggle" data-toggle="buttons" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'">
-                                <label class="btn btn-outline-secondary" style="width:50px;" v-for="item in YearlyMultipleMonths" v-on:click="Toggle(item)">
-                                    <input type="checkbox" autocomplete="off">{{ item.text }}
-                                </label>
-                            </div>
+                            </button>
+                            @*<div class="btn-group-toggle" data-toggle="buttons" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'">
+                                    <label class="btn btn-outline-secondary" style="width:50px;" v-for="item in YearlyMultipleMonths" v-on:click="Toggle(item)">
+                                        <input type="checkbox" autocomplete="off">{{ item.text }}
+                                    </label>
+                                </div>*@
                         </div>
 
                     </div>
@@ -205,19 +223,19 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options3" value="yearly-precise" v-model="YearlyOptions" v-on:change="SubmitForm()">
+                                <input class="form-check-input" type="radio" name="yearly-options" id="yearly-options3" value="yearly-precise" v-model="YearlyOptions" v-on:change="SubmitRRuleValues()">
                                 <label class="form-check-label" for="yearly-options3">
                                     Precise
                                 </label>
                             </div>
                         </div>
                         <div class="col-3">
-                            <select id="yearly-bysetpos" class="form-control" v-model="SelectedYearlyBySetPos" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
+                            <select id="yearly-bysetpos" class="form-control" v-model="SelectedYearlyBySetPos" v-on:change="SubmitRRuleValues()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
                                 <option v-for="item in YearlyBySetPos" v-bind:value="item.value">{{item.text}}</option>
                             </select>
                         </div>
                         <div class="col-3">
-                            <select id="yearly-byday" class="form-control" v-model="SelectedYearlyByDay" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
+                            <select id="yearly-byday" class="form-control" v-model="SelectedYearlyByDay" v-on:change="SubmitRRuleValues()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
                                 <option v-for="item in YearlyByDay" v-bind:value="item.value">{{item.text}}</option>
                             </select>
                             @*TODO
@@ -231,7 +249,7 @@
                                 <label class="col-form-label col-2" for="yearly-bymonth-with-bysetpos-byday">
                                     in
                                 </label>
-                                <select id="yearly-bymonth-with-bysetpos-byday" class="form-control" v-model="SelectedYearlyByMonthWithBySetPosByDay" v-on:change="SubmitForm()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
+                                <select id="yearly-bymonth-with-bysetpos-byday" class="form-control" v-model="SelectedYearlyByMonthWithBySetPosByDay" v-on:change="SubmitRRuleValues()" v-bind:disabled="YearlyOptions !== 'yearly-precise'">
                                     <option v-for="item in YearlyByMonthWithBySetPosByDay" v-bind:value="item.value">{{item.text}}</option>
                                 </select>
                             </div>
@@ -245,7 +263,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label"><strong>Every</strong></label>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3">
-                    <input type="number" id="everyrule-interval" class="form-control" autocomplete="off" min="1" value="1" step="1" v-model="EveryRuleInterval" v-on:change="SubmitForm()">
+                    <input type="number" id="everyrule-interval" class="form-control" autocomplete="off" min="1" value="1" step="1" v-model="EveryRuleInterval" v-on:change="SubmitRRuleValues()">
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-form-label" id="every-frequency-rules">
                     <label id="every-rules-days" v-if="SelectedFrequency === 'daily'">day(s)</label>
@@ -260,13 +278,13 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label"><strong>End</strong></label>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-3">
-                    <select id="end-rule-select" class="form-control" v-model="SelectedEndRule" v-on:change="SubmitForm()">
+                    <select id="end-rule-select" class="form-control" v-model="SelectedEndRule" v-on:change="SubmitRRuleValues()">
                         <option v-for="item in EndRules" v-bind:value="item.value">{{item.text}}</option>
                     </select>
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-3">
-                    <input type="number" id="end-rule-occurrences" class="form-control" autocomplete="off" min="1" max="50" value="1" step="1" v-model="EndRuleOccurrences" v-if="SelectedEndRule === 'occurrences'" v-on:change="SubmitForm()" />
-                    <input type="date" id="end-rule-until" class="form-control" v-model="EndRuleUntil" v-if="SelectedEndRule === 'until'" v-on:change="SubmitForm()" />
+                    <input type="number" id="end-rule-occurrences" class="form-control" autocomplete="off" min="1" max="50" value="1" step="1" v-model="EndRuleOccurrences" v-if="SelectedEndRule === 'occurrences'" v-on:change="SubmitRRuleValues()" />
+                    <input type="date" id="end-rule-until" class="form-control" v-model="EndRuleUntil" v-if="SelectedEndRule === 'until'" v-on:change="SubmitRRuleValues()" />
                 </div>
 
             </div>
@@ -332,5 +350,11 @@
         <script src="~/js/site.js"></script>
     </environment>
 
-    <script type="module" src="~/js/vuetest.js"></script>
+    @*<script type="module" src="~/js/RRuleVue.js"></script>*@
+    <script type="module">
+        import { viewModel } from "/js/RRuleVue.js";
+        viewModel.SubmitRRuleValues()
+        //viewModel.SetFromRRuleCodeSample()
+    </script>
+
 }

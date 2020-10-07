@@ -2,17 +2,18 @@
 import vue from "../lib/vue/types/index";
 //import { RRuleViewModel, HtmlTagItem } from "./RruleViewModel" // -> GET https://localhost:44389/js/RruleViewModel net::ERR_ABORTED 404
 import { RRuleViewModel, HtmlTagItem } from "./RruleViewModel.js" //.js? https://github.com/microsoft/TypeScript/pull/35148 https://forum.freecodecamp.org/t/modules-pattern-es6-browser-cant-find-a-file-path/315998
-import { RRuleWrapper, RRuleResult } from "./RRuleTypes.js";
+import { RRuleWrapper, RRuleResult, RecurrencePattern } from "./RRuleTypes.js";
 import { RRuleHttpClient } from "./rrule-http-client.js";
 declare var Vue: any;
 
 let rruleViewModel = new RRuleViewModel()
 
-let v = new Vue({
+let viewModel = new Vue({
     el: '#recurring-rule',
     data: rruleViewModel,
 
     mounted() {
+        //besser in cshtml
         Vue.nextTick(function () {
             var btns = Array.from(document.getElementsByClassName('btn'));
             for (const x of btns) {
@@ -60,19 +61,39 @@ let v = new Vue({
         },
         Toggle(htmlTagItem: HtmlTagItem) {
             htmlTagItem.checked = !htmlTagItem.checked
-            this.SubmitForm()
+            this.SubmitRRuleValues()
         },
-        SubmitForm() {
+        SetFromRRuleCodeSample() {
+            rruleViewModel.Starttime = "2020-10-08T19:30:00"
+            rruleViewModel.NewRRuleCode = "FREQ=WEEKLY;COUNT=30;BYDAY=TU"
+            this.SetRuleByCode()
+        },
+        SetRuleByCode() {
+            let rRuleHttpClient = new RRuleHttpClient()
+            rRuleHttpClient.getRecurrencePattern(rruleViewModel.NewRRuleCode)            
+            //rRuleHttpClient.getRecurrencePattern(rruleViewModel.RRuleCode)
+                .then((recurrencePattern: RecurrencePattern) => {
+                    rruleViewModel.assignRuleValue(recurrencePattern)
+                    this.SubmitRRuleValues()
+                })
+                .catch((error: AxiosError) => {
+                    //throw error;
+                    console.log(error.message)
+                    rruleViewModel.RRuleError = error.message
+                    //rruleViewModel.ShowReccuringEvent = true
+                });
+        },
+        SubmitRRuleValues() {
             let rRuleWrapper = getRRuleWrapper(rruleViewModel)
             let rRuleHttpClient = new RRuleHttpClient()
             rRuleHttpClient.createRRule(rRuleWrapper)
                 .then((rRuleResult: RRuleResult) => {
-                    console.log(rRuleResult.errorText)
-                    rruleViewModel.RRuleCode = rRuleResult.recurrencePatternString
-                    rruleViewModel.RRuleText = rRuleResult.recurrencePatternText
-                    rruleViewModel.RRuleOutput = getDateTimeArray(rRuleResult.recurrencePatternList)
-                    rruleViewModel.RRuleHint = rRuleResult.hintText
-                    rruleViewModel.RRuleError = rRuleResult.errorText
+                    console.log(rRuleResult.ErrorText)
+                    rruleViewModel.RRuleCode = rRuleResult.RecurrencePatternString
+                    rruleViewModel.RRuleText = rRuleResult.RecurrencePatternText
+                    rruleViewModel.RRuleOutput = getDateTimeArray(rRuleResult.RecurrencePatternList)
+                    rruleViewModel.RRuleHint = rRuleResult.HintText
+                    rruleViewModel.RRuleError = rRuleResult.ErrorText
                     //rruleViewModel.ShowReccuringEvent = true
                 })
                 .catch((error: AxiosError) => {
@@ -82,27 +103,9 @@ let v = new Vue({
                     //rruleViewModel.ShowReccuringEvent = true
                 });
 
-            //getRRuleResult(rRuleWrapper)
-            //    .then((response: AxiosResponse<RRuleResult>) => {
-            //        const rRuleResult: RRuleResult = response.data;
-            //        console.log(rRuleResult.errorText)
-
-            //        rruleViewModel.RRuleCode = rRuleResult.recurrencePatternString
-            //        rruleViewModel.RRuleText = rRuleResult.recurrencePatternText
-            //        rruleViewModel.RRuleOutput = getDateTimeArray(rRuleResult.recurrencePatternList)
-            //        rruleViewModel.RRuleHint = rRuleResult.hintText
-            //        rruleViewModel.RRuleError = rRuleResult.errorText
-            //    })
-            //    .catch((error: AxiosError) => {
-            //        //throw error;
-            //        console.log(error.message)
-            //        rruleViewModel.RRuleError = error.message
-            //    });
         }
     }
 });
-
-v.SubmitForm()
 
 function getRRuleWrapper(rRuleViewModel: RRuleViewModel): RRuleWrapper {
 
@@ -158,30 +161,6 @@ function getRRuleWrapper(rRuleViewModel: RRuleViewModel): RRuleWrapper {
     return rRuleWrapper
 }
 
-
-//declare var axios: any;
-
-//function getRRuleResult(rRuleWrapper: RRuleWrapper): AxiosPromise<RRuleResult> {
-
-//    //let antiForgeryToken = $('input[name="__RequestVerificationToken"]').val();
-
-//    const config = {
-//        headers: {
-//            'content-type': 'application/json;charset=UTF-8',
-//            'Accept': 'application/json'
-//            //"RequestVerificationToken": antiForgeryToken
-//        }
-//    }
-
-//    return axios({
-//        url: 'Home/CreateRRule',
-//        method: 'post',
-//        headers: config.headers,
-//        data: rRuleWrapper
-//    })
-
-//}
-
 function getDateTimeArray(list: Array<string>): Array<Array<string>> {
 
     let result = new Array<Array<string>>(list.length);
@@ -194,3 +173,6 @@ function getDateTimeArray(list: Array<string>): Array<Array<string>> {
     }
     return result
 }
+
+//viewModel.SubmitRRuleValues()
+export { viewModel };

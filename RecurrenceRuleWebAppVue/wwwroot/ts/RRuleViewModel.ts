@@ -1,4 +1,6 @@
-﻿export class HtmlTagItem {
+﻿import { RecurrencePattern, IntMinValue } from "./RRuleTypes.js";
+
+export class HtmlTagItem {
     public value: string
     public text: string
     public checked: boolean
@@ -11,16 +13,11 @@
 }
 
 const days = 31;
+const frequencyEnumBase = 4
+const weekDayArray = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
 
 export class RRuleViewModel {
 
-    //public rRrule: Observable<string>
-    //public fromRruleString: Observable<string>
-    //public reccuringEvent: Observable<string>
-
-    //public ShowY: boolean
-    //public ShowN: boolean
-    //public IfY: boolean
     public ShowAfterBoot: boolean = false
     public ShowReccuringEvent: boolean = false
     public Starttime: string
@@ -28,7 +25,6 @@ export class RRuleViewModel {
     public SelectedFrequency: string
 
     public WeekDays: Array<HtmlTagItem>
-    public ToggleWeekDays: Function
 
     public MonthlyOptions: string
     public MonthDays: Array<HtmlTagItem>    
@@ -64,18 +60,11 @@ export class RRuleViewModel {
     public RRuleError: string
     public RRuleHint: string
 
+    public NewRRuleCode: string
+
     constructor() {
 
-        var thisObject = this
-        //this.rRrule = ko.observable("")
-        //this.fromRruleString = ko.observable("FREQ=DAILY")
-        //this.reccuringEvent = ko.observable("no")
-
         this.ShowReccuringEvent = true
-        //this.ShowY = true
-        //this.ShowN = false
-        //this.IfY = true
-        //this.IfN = false
 
         const today = new Date();
         var dateTimeString = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2) + 'T' + ('0' + today.getHours()).slice(-2) + ':' + ('0' + today.getMinutes()).slice(-2) + ':00';
@@ -94,11 +83,6 @@ export class RRuleViewModel {
             new HtmlTagItem('SA', 'Sat', false),
             new HtmlTagItem('SU', 'Sun', false),
         ];
-
-        this.ToggleWeekDays = function (htmlTagItem: HtmlTagItem) {
-            htmlTagItem.checked = !htmlTagItem.checked
-            //thisObject.ToggleButtonItem(htmlTagItem, thisObject.WeekDays);
-        }
 
         ////MONTHLY
         this.MonthlyOptions = "monthly-days"
@@ -231,108 +215,216 @@ export class RRuleViewModel {
         this.RRuleError = ""
         this.RRuleHint = ""
 
+        
+        this.NewRRuleCode = ""
+
     }
 
-    //private getRule(newValue: string | number | HtmlTagItem | HtmlTagItem[]) {
-    //    let startdate = this.starttime()
-    //    let frequency = this.selectedFrequency().value;
-    //    let interval = this.everyRuleInterval()
-    //    let count = intMinValue;
-    //    let until = null;
-    //    let byday: string[] = [];
-    //    let bymonthday: string[] = [];
-    //    let bysetposition = [];
-    //    let bymonth: string[] = [];
-    //    //let antiForgeryToken = $('input[name="CSRF-TOKEN-MOONGLADE-FORM"]').val()
-    //    let antiForgeryToken = $('input[name="__RequestVerificationToken"]').val();
+    private Initialize() {
+        /*
+        this.Frequencyies = [new HtmlTagItem('daily', 'Daily'), new HtmlTagItem('weekly', 'Weekly'), new HtmlTagItem('monthly', 'Monthly'), new HtmlTagItem('yearly', 'Yearly')]
+        //WEEKLY
+        this.WeekDays = [
+            new HtmlTagItem('MO', 'Mon', false),
+            new HtmlTagItem('TU', 'Tue', false),
+            new HtmlTagItem('WE', 'Wed', false),
+            new HtmlTagItem('TH', 'Thu', false),
+            new HtmlTagItem('FR', 'Fri', false),
+            new HtmlTagItem('SA', 'Sat', false),
+            new HtmlTagItem('SU', 'Sun', false),
+        ];
 
-    //    switch (frequency) {
-    //        case "weekly":
-    //            byday = this.weekDays().filter(i => i.checked).map(i => i.value);
-    //            break;
-    //        case "monthly":
-    //            let monthlyOption = this.monthlyOptions();
-    //            switch (monthlyOption) {
-    //                case "monthly-days":
-    //                    bymonthday = this.monthDays().filter(i => i.checked).map(i => i.value);
-    //                    break;
-    //                case "monthly-precise":
-    //                    bysetposition.push(this.selectedMonthByDayPos().value);
-    //                    byday.push(this.selectedMonthByDayPosName().value);
-    //                    break;
-    //            }
-    //            break;
-    //        case "yearly":
-    //            let yearlyOption = this.yearlyOptions();
-    //            switch (yearlyOption) {
-    //                case "yearly-one-month":
-    //                    bymonth.push(this.selectedYearlyByMonth().value);
-    //                    bymonthday.push(this.selectedYearlyByMonthDay().value);
-    //                    break;
-    //                case "yearly-multiple-months":
-    //                    bymonth = this.yearlyMultipleMonths().filter(i => i.checked).map(i => i.value);
-    //                    break;
-    //                case "yearly-precise":
-    //                    bysetposition.push(this.selectedYearlyBySetPos().value);
-    //                    byday.push(this.selectedYearlyByDay().value);
-    //                    bymonth.push(this.selectedYearlyByMonthWithBySetPosByDay().value);
-    //                    break;
-    //            }
-    //            break;
-    //    }
+        ////MONTHLY on
+        this.MonthDays = new Array<HtmlTagItem>(days);
+        for (let i = days; i--;) this.MonthDays[i] = new HtmlTagItem((i + 1).toString(), (i + 1).toString(), false);
 
-    //    let endRuleSelected = this.selectedEndRule().value;
-    //    switch (endRuleSelected) {
-    //        case "never":
-    //            break;
-    //        case "occurrences":
-    //            count = this.endRuleOccurrences();
-    //            break;
-    //        case "until":
-    //            until = this.endRuleUntil(); //erstmal nur für Format 2020-12-31
-    //            break;
-    //    }
-    //    let rRuleWrapper = { "StartDate": startdate, "Frequency": frequency, "Interval": Number(interval), "ByDayValue": byday, "ByMonth": bymonth, "ByMonthDay": bymonthday, "BySetPosition": bysetposition, "Count": count, "Until": until };
-    //    //https://www.thereformedprogrammer.net/asp-net-core-razor-pages-how-to-implement-ajax-requests/
+        //MONTHLY on the
+        this.MonthByDayPos = [
+            new HtmlTagItem((1).toString(), 'First'),
+            new HtmlTagItem((2).toString(), 'Second'),
+            new HtmlTagItem((3).toString(), 'Third'),
+            new HtmlTagItem((4).toString(), 'Fourth'),
+            new HtmlTagItem((-1).toString(), 'Last')
+        ];
 
-    //    //axios-test
-    //    //$.ajax({
-    //    //    type: 'POST',
-    //    //    url: '/Home/CreateRRule',
-    //    //    contentType: 'application/json; charset=utf-8',
-    //    //    headers: { "RequestVerificationToken": `${antiForgeryToken}` },
-    //    //    data: JSON.stringify(rRuleWrapper),
-    //    //    success: (result) => {
-    //    //        this.rruleCode(result.recurrencePatternString)
-    //    //        this.rruleText(result.recurrencePatternText)
-    //    //        this.rruleOutput(result.recurrencePatternList)
-    //    //        this.rruleError(result.errorText);
-    //    //        this.rruleHint(result.hintText);
-    //    //        this.reccuringEvent('yes')
-    //    //    },
-    //    //    error: (XMLHttpRequest, textStatus, errorThrown) => {
-    //    //        this.rruleError(`${XMLHttpRequest.status} ${textStatus}`);
-    //    //        this.reccuringEvent('yes')
-    //    //    }
-    //    //});
+        this.MonthByDayPosName = [
+            new HtmlTagItem('MO', 'Monday'),
+            new HtmlTagItem('TU', 'Tuesday'),
+            new HtmlTagItem('WE', 'Wednesday'),
+            new HtmlTagItem('TH', 'Thursday'),
+            new HtmlTagItem('FR', 'Friday'),
+            new HtmlTagItem('SA', 'Saturday'),
+            new HtmlTagItem('SU', 'Sunday')
+        ];
 
-    //};
+        //YEARLY One Month Out of the Year
+        this.YearlyByMonth = [
+            new HtmlTagItem((1).toString(), 'January'),
+            new HtmlTagItem((2).toString(), 'February'),
+            new HtmlTagItem((3).toString(), 'March'),
+            new HtmlTagItem((4).toString(), 'April'),
+            new HtmlTagItem((5).toString(), 'May'),
+            new HtmlTagItem((6).toString(), 'June'),
+            new HtmlTagItem((7).toString(), 'July'),
+            new HtmlTagItem((8).toString(), 'August'),
+            new HtmlTagItem((9).toString(), 'September'),
+            new HtmlTagItem((10).toString(), 'October'),
+            new HtmlTagItem((11).toString(), 'November'),
+            new HtmlTagItem((12).toString(), 'December')
+        ];
 
-    //private ToggleButtonItem(item: HtmlTagItem, array: Array<HtmlTagItem>) {
-    //    let index = array.indexOf(item);
-    //    if (index !== -1) {
-    //        let currentItem = array()[index];
-    //        let newItem = new HtmlTagItem(currentItem.value, currentItem.text, !currentItem.checked);
-    //        array.replace(currentItem, newItem);
-    //    }
-    //}
+        this.YearlyByMonthDay = new Array<HtmlTagItem>(days)
+        for (let i = days; i--;) this.YearlyByMonthDay[i] = new HtmlTagItem((i + 1).toString(), (i + 1).toString(), false);
 
-    //public refresh() {
-    //    this.getRule(0)
-    //    //this.reccuringEvent('yes')
-    //}
+        //YEARLY Multiple Months
+        this.YearlyMultipleMonths = [
+            new HtmlTagItem((1).toString(), 'Jan', false),
+            new HtmlTagItem((2).toString(), 'Feb', false),
+            new HtmlTagItem((3).toString(), 'Mar', false),
+            new HtmlTagItem((4).toString(), 'Apr', false),
+            new HtmlTagItem((5).toString(), 'May', false),
+            new HtmlTagItem((6).toString(), 'Jun', false),
+            new HtmlTagItem((7).toString(), 'Jul', false),
+            new HtmlTagItem((8).toString(), 'Aug', false),
+            new HtmlTagItem((9).toString(), 'Sep', false),
+            new HtmlTagItem((10).toString(), 'Oct', false),
+            new HtmlTagItem((11).toString(), 'Nov', false),
+            new HtmlTagItem((12).toString(), 'Dec', false)
+        ];
 
+        //YEARLY precise
+        this.YearlyBySetPos = [
+            new HtmlTagItem((1).toString(), 'First'),
+            new HtmlTagItem((2).toString(), 'Second'),
+            new HtmlTagItem((3).toString(), 'Third'),
+            new HtmlTagItem((4).toString(), 'Fourth'),
+            new HtmlTagItem((-1).toString(), 'Last')
+        ]
+
+        this.YearlyByDay = [
+            new HtmlTagItem('MO', 'Monday'),
+            new HtmlTagItem('TU', 'Tuesday'),
+            new HtmlTagItem('WE', 'Wednesday'),
+            new HtmlTagItem('TH', 'Thursday'),
+            new HtmlTagItem('FR', 'Friday'),
+            new HtmlTagItem('SA', 'Saturday'),
+            new HtmlTagItem('SU', 'Sunday')
+        ]
+
+        this.YearlyByMonthWithBySetPosByDay = [
+            new HtmlTagItem((1).toString(), 'January'),
+            new HtmlTagItem((2).toString(), 'February'),
+            new HtmlTagItem((3).toString(), 'March'),
+            new HtmlTagItem((4).toString(), 'April'),
+            new HtmlTagItem((5).toString(), 'May'),
+            new HtmlTagItem((6).toString(), 'June'),
+            new HtmlTagItem((7).toString(), 'July'),
+            new HtmlTagItem((8).toString(), 'August'),
+            new HtmlTagItem((9).toString(), 'September'),
+            new HtmlTagItem((10).toString(), 'October'),
+            new HtmlTagItem((11).toString(), 'November'),
+            new HtmlTagItem((12).toString(), 'December')
+        ]
+
+        //end rules
+        this.EndRules = [
+            new HtmlTagItem('never', 'Never'),
+            new HtmlTagItem('occurrences', 'Occurrences'),
+            new HtmlTagItem('until', 'Until')
+        ];
+        */
+    }
+
+    private convertDayOfWeekEnum(value): string {
+        let index = 6; //'SU'
+        if (value > 0) //'MO'...'SA'
+            index = value - 1;
+        return weekDayArray[index];
+    }
+
+
+    public assignRuleValue(recurrencePattern: RecurrencePattern) {
+        this.ShowReccuringEvent = true
+        this.SelectedFrequency = this.Frequencyies[recurrencePattern.Frequency - frequencyEnumBase].value
+        this.EveryRuleInterval = recurrencePattern.Interval
+        let byday = recurrencePattern.ByDay.map(i => this.convertDayOfWeekEnum(i.DayOfWeek));
+        ////let byday = recurrencePattern.ByDay.map(i => {
+        ////    let dayOfWeek = i.dayOfWeek
+        ////    this.convertDayOfWeekEnum(dayOfWeek)
+        ////});
+        //let frequency = this.selectedFrequency().value;
+        switch (this.SelectedFrequency) {
+            case "weekly":
+                this.WeekDays.forEach((item) => {
+                    item.checked = byday.indexOf(item.value) > -1
+                })
+                break;
+            case "monthly":
+                this.MonthDays.forEach((item) => {
+                    item.checked = false
+                })
+                if (recurrencePattern.ByMonthDay.length > 0) {
+                    this.MonthlyOptions = "monthly-days"
+                    recurrencePattern.ByMonthDay.forEach((item) => {
+                        this.MonthDays[item - 1].checked = true
+                        //item.checked = this.MonthDays[item - 1]) > -1
+                    })
+                }
+                else {
+                    this.MonthlyOptions = "monthly-precise"
+                    //this.selectedMonthByDayPos(this.monthByDayPos().filter(i => recurrencePattern.BySetPosition.includes(i.value))[0]);
+                    //this.selectedMonthByDayPosName(this.monthByDayPosName().filter(i => byday.includes(i.value))[0]);
+                    if (recurrencePattern.BySetPosition.length > 0)
+                        this.SelectedMonthByDayPos = this.MonthByDayPos.filter(i => Number(i.value) === recurrencePattern.BySetPosition[0])[0].value                    
+                    if (byday.length > 0)
+                        this.SelectedMonthByDayPosName = this.MonthByDayPosName.filter(i => i.value === byday[0])[0].value
+                }
+                break;
+            case "yearly":
+                if (recurrencePattern.ByMonth.length > 0 && recurrencePattern.ByMonthDay.length > 0) {
+                    this.YearlyOptions = "yearly-one-month"
+                    //this.selectedYearlyByMonth(this.yearlyByMonth().filter(i => recurrencePattern.ByMonth.includes(i.value))[0]);
+                    //this.selectedYearlyByMonthDay(this.yearlyByMonthDay().filter(i => recurrencePattern.ByMonthDay.includes(i.value))[0]);
+                    this.SelectedYearlyByMonth = this.YearlyByMonth.filter(i => recurrencePattern.ByMonth.indexOf(Number(i.value)) > -1)[0].value
+                    this.SelectedYearlyByMonthDay = this.YearlyByMonthDay.filter(i => recurrencePattern.ByMonthDay.indexOf(Number(i.value)) > -1)[0].value
+                }
+                else if (recurrencePattern.BySetPosition.length > 0 && byday.length > 0 && recurrencePattern.ByMonth.length > 0) {
+                    this.YearlyOptions = "yearly-precise"
+                    //this.selectedYearlyBySetPos(this.yearlyBySetPos().filter(i => recurrencePattern.BySetPosition.includes(i.value))[0]);
+                    //this.selectedYearlyByDay(this.yearlyByDay().filter(i => byday.includes(i.value))[0]);
+                    //this.selectedYearlyByMonthWithBySetPosByDay(this.yearlyByMonthWithBySetPosByDay().filter(i => recurrencePattern.ByMonth.includes(i.value))[0]);
+                    this.SelectedYearlyBySetPos = this.YearlyBySetPos.filter(i => recurrencePattern.BySetPosition.indexOf(Number(i.value)) > -1)[0].value
+                    this.SelectedYearlyByDay = this.YearlyByDay.filter(i => i.value === byday[0])[0].value
+                    this.SelectedYearlyByMonthWithBySetPosByDay = this.YearlyByMonthWithBySetPosByDay.filter(i => recurrencePattern.ByMonth.indexOf(Number(i.value)) > -1)[0].value
+                }
+                else if (recurrencePattern.ByMonth.length > 0) {
+                    this.YearlyOptions = "yearly-multiple-months"
+                    //this.yearlyMultipleMonths().filter(i => recurrencePattern.ByMonth.includes(i.value)).forEach((item, index) => {
+                    //    this.checkButtonItem(item, this.yearlyMultipleMonths);
+                    //});
+                    this.YearlyMultipleMonths.forEach((item) => {
+                        item.checked = false
+                    })
+                    if (recurrencePattern.ByMonth.length > 0) {
+                        recurrencePattern.ByMonth.forEach((item) => {
+                            this.YearlyMultipleMonths[item - 1].checked = true
+                        })
+                    }
+
+                }
+                break;
+        }
+
+        if (recurrencePattern.Count > IntMinValue) {
+            this.SelectedEndRule = this.EndRules[1].value
+            this.EndRuleOccurrences = recurrencePattern.Count
+        }
+        else if (recurrencePattern.Until.length > 0) {
+            this.SelectedEndRule = this.EndRules[2].value
+            this.EndRuleUntil = recurrencePattern.Until.substring(0, 10)
+            //2020-09-30T00:00:00+02:00 -> 2020-09-30
+        }
+    }
 }
 
-//export default RRuleViewModel 
 

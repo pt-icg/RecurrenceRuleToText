@@ -90,5 +90,11 @@ namespace RecurrenceRuleWebAppVue.Controllers
             return new JsonResult(rRuleResult);
         }
 
+        public IActionResult GetRecurrencePattern(string RRule)
+        {
+            RecurrencePattern recurrencePattern = RecurringRuleProcessor.GetRecurrencePattern(new DateTime(2020, 9, 3, 19, 30, 0, DateTimeKind.Local), RRule);
+            return new JsonResult(recurrencePattern);
+        }
+
     }
 }

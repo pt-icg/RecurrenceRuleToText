@@ -1,10 +1,10 @@
-﻿const intMinValue = -2147483648; //Int32 MinValue = -2147483648 => default in RecurrencePattern.Count
+﻿export const IntMinValue = -2147483648; //Int32 MinValue = -2147483648 => default in RecurrencePattern.Count
 
 export class RRuleWrapper {
     StartDate: string
     Frequency: string
     Interval: number
-    Count: number = intMinValue
+    Count: number = IntMinValue
     Until: string = null
     ByDayValue: string[] = []
     ByMonth: string[] = []
@@ -12,17 +12,28 @@ export class RRuleWrapper {
     BySetPosition: string[] = []    
 }
 
-export interface RRuleWrapperOld {
-    StartDate: string
-    Frequency: string
-    Interval: number
+export interface RRuleResult {
+    ErrorText: string
+    RecurrencePatternString: string
+    RecurrencePatternText: string
+    RecurrencePatternList: Array<string>
+    HintText: string
 }
 
-export interface RRuleResult {
-    errorText: string
-    recurrencePatternString: string
-    recurrencePatternText: string
-    recurrencePatternList: Array<string>
-    hintText: string
+export interface WeekDay {
+    Offset: number
+    DayOfWeek: number
+}
+
+export interface RecurrencePattern {
+    BySetPosition: Array<number>
+    ByMonth: Array<number>
+    ByMonthDay: Array<number>
+    ByDay: Array<WeekDay>
+    Interval: number
+    Count: number
+    Offset: number
+    Until: string
+    Frequency: number
 }
 

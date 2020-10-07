@@ -16,6 +16,8 @@ export class RRuleHttpClient extends HttpClient {
             return config;
         };
         this.createRRule = (data) => this.instance.post('/Home/CreateRRule', data);
+        //public getRecurrencePattern = (data) => this.instance.get<string, RecurrencePattern>('/Home/GetRecurrencePattern', data);
+        this.getRecurrencePattern = (rrule) => this.instance.get(`Home/GetRecurrencePattern?RRule=${encodeURI(rrule)}`);
         this._initializeRequestInterceptor();
     }
 }
