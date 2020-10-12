@@ -14,9 +14,14 @@ export const RRuleButtonGroup = Vue.component('rrule-button-group', {
             required: false,
         },
     },
+    //template: `<div class="btn-group-toggle" data-toggle='buttons'>\
+    //             <button class="btn btn-outline-secondary"\
+    //                v-bind:id="item.id" v-bind:style="{ width: buttonwidth + 'px' }" v-for="item in items" v-bind:disabled="disabled" v-on:click="toggle(item)"\
+    //                onclick="mobileHelperOnClick()" ontouchstart="mobileHelperOnTouchstart()" touchend="mobileHelperOnTouchend()">{{ item.text }}</button>\
+    //          </div>`,
     template: `<div class="btn-group-toggle" data-toggle='buttons'>\
-                 <button class="btn btn-outline-secondary" v-bind:id="item.id" v-bind:style = "{ width: buttonwidth + 'px' }" v-for="item in items" v-bind:disabled="disabled" v-on:click="toggle(item)">{{ item.text }}</button>\
-              </div>`
+                 <button class="btn btn-outline-secondary" v-bind:id="item.id" v-bind:style="{ width: buttonwidth + 'px' }" v-for="item in items" v-bind:disabled="disabled" v-on:click="toggle(item)">{{ item.text }}</button>\
+              </div>`,
 });
 //https://discuss.appstudio.dev/t/bootstrap-button-click-in-mobile-sticks/575/4
 export function prepareBtnClass() {

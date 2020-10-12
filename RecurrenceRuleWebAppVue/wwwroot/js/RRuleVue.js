@@ -1,16 +1,14 @@
-//import { RRuleViewModel, HtmlTagItem } from "./RruleViewModel" // -> GET https://localhost:44389/js/RruleViewModel net::ERR_ABORTED 404
 import { RRuleViewModel } from "./RruleViewModel.js"; //.js? https://github.com/microsoft/TypeScript/pull/35148 https://forum.freecodecamp.org/t/modules-pattern-es6-browser-cant-find-a-file-path/315998
 import { RRuleWrapper } from "./RRuleTypes.js";
 import { RRuleHttpClient } from "./rrule-http-client.js";
-//import * as  btnhlp from "./ButtonGroupHelper.js";
-//import { RRuleButtonGroup } from "./RRuleButtonGroup.js";
+import { RRuleButtonGroup } from "./RRuleButtonGroup.js";
 import * as rrbg from "./RRuleButtonGroup.js";
 let rruleViewModel = new RRuleViewModel();
 let viewModel = new Vue({
     el: '#recurring-rule',
-    //components: {
-    //    'rrule-button-group': RRuleButtonGroup
-    //},
+    components: {
+        'rrule-button-group': RRuleButtonGroup
+    },
     data: rruleViewModel,
     mounted() {
         Vue.nextTick(function () {
@@ -61,9 +59,6 @@ let viewModel = new Vue({
         //    });
         //});
     },
-    //beforeDestroy() {
-    //    window.removeEventListener('resize', this.someMethod);
-    //},
     methods: {
         ResetForm() {
             this.Starttime = new Date();
