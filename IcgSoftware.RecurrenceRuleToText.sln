@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecurrenceRuleWebApp", "Rec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecurrenceRuleWebAppVue", "RecurrenceRuleWebAppVue\RecurrenceRuleWebAppVue.csproj", "{3C5A3BA9-8449-4A44-B94D-76D41EC71DC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveButtonGroup", "ActiveButtonGroup\ActiveButtonGroup.csproj", "{97EA403E-30BE-4E5F-95A8-02B7EE0A3308}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{3C5A3BA9-8449-4A44-B94D-76D41EC71DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C5A3BA9-8449-4A44-B94D-76D41EC71DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C5A3BA9-8449-4A44-B94D-76D41EC71DC8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97EA403E-30BE-4E5F-95A8-02B7EE0A3308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97EA403E-30BE-4E5F-95A8-02B7EE0A3308}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97EA403E-30BE-4E5F-95A8-02B7EE0A3308}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97EA403E-30BE-4E5F-95A8-02B7EE0A3308}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

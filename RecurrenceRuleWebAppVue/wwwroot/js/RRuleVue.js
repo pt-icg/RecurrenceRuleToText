@@ -2,30 +2,47 @@
 import { RRuleViewModel } from "./RruleViewModel.js"; //.js? https://github.com/microsoft/TypeScript/pull/35148 https://forum.freecodecamp.org/t/modules-pattern-es6-browser-cant-find-a-file-path/315998
 import { RRuleWrapper } from "./RRuleTypes.js";
 import { RRuleHttpClient } from "./rrule-http-client.js";
+//import * as  btnhlp from "./ButtonGroupHelper.js";
+//import { RRuleButtonGroup } from "./RRuleButtonGroup.js";
+import * as rrbg from "./RRuleButtonGroup.js";
 let rruleViewModel = new RRuleViewModel();
 let viewModel = new Vue({
     el: '#recurring-rule',
+    //components: {
+    //    'rrule-button-group': RRuleButtonGroup
+    //},
     data: rruleViewModel,
     mounted() {
-        //besser in cshtml
         Vue.nextTick(function () {
-            var btns = Array.from(document.getElementsByClassName('btn'));
-            for (const x of btns) {
-                const y = x;
-                y.addEventListener("click", function () {
-                    console.log("mounted click blur");
-                    y.blur();
-                });
-                y.addEventListener("touchstart", function () {
-                    console.log("mounted touchstart");
-                    y.classList.remove("mobileHoverFix");
-                });
-                y.addEventListener("touchend", function () {
-                    console.log("mounted touchend");
-                    y.classList.add("mobileHoverFix");
-                });
-            }
+            rrbg.prepareBtnClass();
         });
+        //besser in cshtml
+        //Vue.nextTick(function () {
+        //    //https://discuss.appstudio.dev/t/bootstrap-button-click-in-mobile-sticks/575/4
+        //    //btnhlp.prepareBtn()
+        //    var btns = Array.from(document.getElementsByClassName('btn'));
+        //    for (const btn of btns) {
+        //        const hTMLElement = <HTMLElement>btn;
+        //        hTMLElement.addEventListener("click", function () {
+        //            hTMLElement.blur();
+        //            let msg = `${hTMLElement.innerText}: mounted click blur`
+        //            console.log(msg);
+        //            rruleViewModel.BtnProblemInfo = msg
+        //        });
+        //        hTMLElement.addEventListener("touchstart", function () {
+        //            hTMLElement.classList.remove("mobileHoverFix");
+        //            let msg = `${hTMLElement.innerText}: mounted touchstart`
+        //            console.log(msg);
+        //            rruleViewModel.BtnProblemInfo = msg
+        //        });
+        //        hTMLElement.addEventListener("touchend", function () {
+        //            hTMLElement.classList.add("mobileHoverFix");
+        //            let msg = `${hTMLElement.innerText}: mounted touchend`
+        //            console.log(msg);
+        //            rruleViewModel.BtnProblemInfo = msg
+        //        });
+        //    }
+        //});
         //Vue.nextTick(function () {
         //    // I want to access props here but it return 0 length array 
         //    let vm = this;
@@ -51,9 +68,14 @@ let viewModel = new Vue({
         ResetForm() {
             this.Starttime = new Date();
         },
-        Toggle(htmlTagItem) {
-            htmlTagItem.checked = !htmlTagItem.checked;
+        Toggle(item) {
+            item.checked = !item.checked;
             this.SubmitRRuleValues();
+        },
+        ToggleTest(item) {
+            item.checked = !item.checked;
+            this.SubmitRRuleValues();
+            alert(`${item.value}: active? ${item.checked}`);
         },
         SetFromRRuleCodeSample() {
             rruleViewModel.Starttime = "2020-10-08T19:30:00";
@@ -80,7 +102,8 @@ let viewModel = new Vue({
             let rRuleHttpClient = new RRuleHttpClient();
             rRuleHttpClient.createRRule(rRuleWrapper)
                 .then((rRuleResult) => {
-                console.log(rRuleResult.ErrorText);
+                if (rRuleResult.ErrorText !== '')
+                    console.log(rRuleResult.ErrorText);
                 rruleViewModel.RRuleCode = rRuleResult.RecurrencePatternString;
                 rruleViewModel.RRuleText = rRuleResult.RecurrencePatternText;
                 rruleViewModel.RRuleOutput = getDateTimeArray(rRuleResult.RecurrencePatternList);
