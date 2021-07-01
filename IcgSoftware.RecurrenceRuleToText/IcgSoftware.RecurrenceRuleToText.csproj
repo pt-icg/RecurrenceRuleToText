@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>pt</Authors>
     <Company>IcgSoftware</Company>
     <Description>Human readable extension for iCal.NET RecurrencePattern https://github.com/rianjs/ical.net</Description>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ical.Net" Version="4.1.11" />
+    <PackageReference Include="Ical.Net" Version="4.2.0" />
     <PackageReference Include="IcgSoftware.IntToOrdinalNumber" Version="1.0.0" />
   </ItemGroup>
 

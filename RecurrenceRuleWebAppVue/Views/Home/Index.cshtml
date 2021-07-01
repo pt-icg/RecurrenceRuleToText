@@ -196,7 +196,6 @@
                         </div>
                         <div class="col-10 d-flex flex-wrap" id="yearly-multiple-months">
                             <div class="btn-group btn-group-toggle">
-                                @*<rrule-button-group v-bind:items="YearlyMultipleMonths" v-bind:width="50" v-bind:toggle="Toggle" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'"></rrule-button-group>*@
                                 <rrule-button-group v-bind:items="YearlyMultipleMonths" v-bind:buttonwidth="50" v-bind:toggle="Toggle" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'"></rrule-button-group>
                                 @*<button class="btn btn-outline-secondary" style="width:50px;" v-for="item in YearlyMultipleMonths" v-on:click="Toggle(item)" v-bind:class="{ active: item.checked }" v-bind:disabled="YearlyOptions !== 'yearly-multiple-months'">
                                         {{ item.text }}
