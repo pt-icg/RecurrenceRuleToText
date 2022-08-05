@@ -88,6 +88,15 @@ namespace IcgSoftware.RecurrenceRuleToText {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to day.
+        /// </summary>
+        internal static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to and.
         /// </summary>
         internal static string DayChainLastSeparator {
@@ -124,15 +133,6 @@ namespace IcgSoftware.RecurrenceRuleToText {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Friday.
-        /// </summary>
-        internal static string Friday {
-            get {
-                return ResourceManager.GetString("Friday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to last.
         /// </summary>
         internal static string Last {
@@ -147,15 +147,6 @@ namespace IcgSoftware.RecurrenceRuleToText {
         internal static string LastNumeral {
             get {
                 return ResourceManager.GetString("LastNumeral", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Monday.
-        /// </summary>
-        internal static string Monday {
-            get {
-                return ResourceManager.GetString("Monday", resourceCulture);
             }
         }
         
@@ -250,15 +241,6 @@ namespace IcgSoftware.RecurrenceRuleToText {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saturday.
-        /// </summary>
-        internal static string Saturday {
-            get {
-                return ResourceManager.GetString("Saturday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to second.
         /// </summary>
         internal static string Second {
@@ -273,15 +255,6 @@ namespace IcgSoftware.RecurrenceRuleToText {
         internal static string SecondLastNumeral {
             get {
                 return ResourceManager.GetString("SecondLastNumeral", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sunday.
-        /// </summary>
-        internal static string Sunday {
-            get {
-                return ResourceManager.GetString("Sunday", resourceCulture);
             }
         }
         
@@ -304,24 +277,6 @@ namespace IcgSoftware.RecurrenceRuleToText {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thursday.
-        /// </summary>
-        internal static string Thursday {
-            get {
-                return ResourceManager.GetString("Thursday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tuesday.
-        /// </summary>
-        internal static string Tuesday {
-            get {
-                return ResourceManager.GetString("Tuesday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to until {0}.
         /// </summary>
         internal static string UntilDateEnding {
@@ -340,11 +295,20 @@ namespace IcgSoftware.RecurrenceRuleToText {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wednesday.
+        ///   Looks up a localized string similar to weekday.
         /// </summary>
-        internal static string Wednesday {
+        internal static string Weekday {
             get {
-                return ResourceManager.GetString("Wednesday", resourceCulture);
+                return ResourceManager.GetString("Weekday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to weekend days.
+        /// </summary>
+        internal static string WeekendDay {
+            get {
+                return ResourceManager.GetString("WeekendDay", resourceCulture);
             }
         }
         
