@@ -168,27 +168,6 @@
   <data name="YearlyOnDayMonthPattern" xml:space="preserve">
     <value>MMMM</value>
   </data>
-  <data name="Monday" xml:space="preserve">
-    <value>lundi</value>
-  </data>
-  <data name="Tuesday" xml:space="preserve">
-    <value>mardi</value>
-  </data>
-  <data name="Wednesday" xml:space="preserve">
-    <value>mercredi</value>
-  </data>
-  <data name="Thursday" xml:space="preserve">
-    <value>jeudi</value>
-  </data>
-  <data name="Friday" xml:space="preserve">
-    <value>vendredi</value>
-  </data>
-  <data name="Saturday" xml:space="preserve">
-    <value>samedi</value>
-  </data>
-  <data name="Sunday" xml:space="preserve">
-    <value>dimanche</value>
-  </data>
   <data name="CountEnding" xml:space="preserve">
     <value>à {0} reprises</value>
     <comment>{0} fois</comment>
@@ -253,5 +232,14 @@
   </data>
   <data name="YearlyOnMonth" xml:space="preserve">
     <value>en {0}</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>jour</value>
+  </data>
+  <data name="Weekday" xml:space="preserve">
+    <value>jour ouvrable</value>
+  </data>
+  <data name="WeekendDay" xml:space="preserve">
+    <value>jour du weekend</value>
   </data>
 </root>

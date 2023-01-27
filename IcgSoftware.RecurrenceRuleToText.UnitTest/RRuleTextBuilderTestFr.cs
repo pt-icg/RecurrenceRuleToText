@@ -17,6 +17,13 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             var rRuleTextBuilderTest = new RRuleTextBuilderTestHelper(rRuleString, readableString, "fr");
             Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
         }
+        
+        protected override void ToTextTestWithShortWeekday(string rRuleString, string readableString)
+        {
+            Debug.WriteLine("FR: " + readableString);
+            var rRuleTextBuilderTest = new RRuleTextBuilderTestHelper(rRuleString, readableString, "fr", new DisplayOptions(){ShortWeekdays = true});
+            Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
+        }
 
         [TestMethod]
         public void LastNumeral()
@@ -106,5 +113,22 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             ToTextTest("RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU", "toutes les 2 semaines le mardi");
         }
 
+        [TestMethod]
+        public void YearlyDay()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=SU,MO,TU,WE,TH,FR,SA;BYMONTH=1;BYSETPOS=1", "tous les ans le premier jour de janvier");
+        }
+        
+        [TestMethod]
+        public void YearlyWeekday()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=MO,TU,WE,TH,FR;BYMONTH=1;BYSETPOS=1", "tous les ans le premier jour ouvrable de janvier");
+        }
+        
+        [TestMethod]
+        public void YearlyWeekendDay()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=SU,SA;BYMONTH=1;BYSETPOS=1", "tous les ans le premier jour du weekend de janvier");
+        }
     }
 }

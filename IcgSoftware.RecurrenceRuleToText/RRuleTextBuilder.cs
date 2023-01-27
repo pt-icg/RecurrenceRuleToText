@@ -17,19 +17,29 @@ namespace IcgSoftware.RecurrenceRuleToText
 
         public static string ToText(this RecurrencePattern recurrencePattern)
         {
-            return ToText(recurrencePattern, GetDefaultCulture());
+            return ToText(recurrencePattern, GetDefaultCulture(), new DisplayOptions());
         }
 
+        public static string ToText(this RecurrencePattern recurrencePattern, DisplayOptions options)
+        {
+            return ToText(recurrencePattern, GetDefaultCulture(), options);
+        }
+        
         public static string ToText(this RecurrencePattern recurrencePattern, CultureInfo cultureInfo)
+        {
+            return ToText(recurrencePattern, cultureInfo, new DisplayOptions());
+        }
+
+        public static string ToText(this RecurrencePattern recurrencePattern, CultureInfo cultureInfo, DisplayOptions options)
         {
             if (cultureInfo == null)
             {
                 cultureInfo = GetDefaultCulture();
             }
-            var rRuleTextBuilderIntern = new RRuleTextBuilderIntern(recurrencePattern, cultureInfo);
+            var rRuleTextBuilderIntern = new RRuleTextBuilderIntern(recurrencePattern, cultureInfo, options);
             return rRuleTextBuilderIntern.ToText();
         }
-
+        
         public static bool IsWeekdays(this RecurrencePattern recurrencePattern)
         {
             List<DayOfWeek> weekDaysR = new List<DayOfWeek>() { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday };
@@ -37,6 +47,13 @@ namespace IcgSoftware.RecurrenceRuleToText
             return weekDaysR.Except(weekDaysP).ToList().Count == 0 && weekDaysP.Except(weekDaysR).ToList().Count == 0;
         }
 
+        public static bool IsWeekendDays(this RecurrencePattern recurrencePattern)
+        {
+            List<DayOfWeek> weekDaysR = new List<DayOfWeek>() { DayOfWeek.Sunday, DayOfWeek.Saturday };
+            List<DayOfWeek> weekDaysP = recurrencePattern.ByDay.Select(i => i.DayOfWeek).ToList();
+            return weekDaysR.Except(weekDaysP).ToList().Count == 0 && weekDaysP.Except(weekDaysR).ToList().Count == 0;
+        }
+        
         public static bool IsEveryDay(this RecurrencePattern recurrencePattern)
         {
             List<DayOfWeek> weekDaysR = new List<DayOfWeek>() { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday };
@@ -103,13 +120,15 @@ namespace IcgSoftware.RecurrenceRuleToText
         {
             private readonly RecurrencePattern recurrencePattern;
             private readonly CultureInfo ordinalCulture;
-
-            public RRuleTextBuilderIntern(RecurrencePattern recurrencePattern, CultureInfo cultureInfo)
+            private readonly DisplayOptions displayOptions;
+            
+            public RRuleTextBuilderIntern(RecurrencePattern recurrencePattern, CultureInfo cultureInfo, DisplayOptions options)
             {
                 this.recurrencePattern = recurrencePattern;
                 Language.Culture = cultureInfo;
                 //default language is "en" but ToOrdinalNumber has a default dot
                 ordinalCulture = cultureInfo.Equals(CultureInfo.InvariantCulture) ? new CultureInfo("en") : cultureInfo;
+                displayOptions = options;
             }
 
             public string ToText()
@@ -315,12 +334,32 @@ namespace IcgSoftware.RecurrenceRuleToText
                     return "";
 
                 var dayValue = TranslateSetPosNumber(recurrencePattern.BySetPosition.First());
-                DayOfWeek dayOfWeek = recurrencePattern.ByDay.Select(i => i.DayOfWeek).First();
-                dayValue += " " + GetDayOfWeekString(dayOfWeek);
+                
+                dayValue += " " + GetDayOrDayDescription();
+
                 return String.Format(Language.MonthlyOnNumberedDay, dayValue);
             }
 
-
+            private string GetDayOrDayDescription()
+            {
+                if (IsEveryDay(recurrencePattern))
+                {
+                    return Language.Day;
+                }
+                else if (IsWeekdays(recurrencePattern))
+                {
+                    return Language.Weekday;
+                }
+                else if (IsWeekendDays(recurrencePattern))
+                {
+                    return Language.WeekendDay;
+                }
+                else
+                {
+                    return GetDayOfWeekString(recurrencePattern.ByDay.Select(i => i.DayOfWeek).First());
+                }
+            }
+            
             private string BuildMonthlyOnWeekDay()
             {
                 if (recurrencePattern.ByDay.Count == 0)
@@ -396,11 +435,10 @@ namespace IcgSoftware.RecurrenceRuleToText
                 if (recurrencePattern.BySetPosition.Count == 0 && recurrencePattern.ByDay.Count == 0 && recurrencePattern.ByMonth.Count == 0)
                     return "";
 
-                DayOfWeek dayOfWeek = recurrencePattern.ByDay.Select(i => i.DayOfWeek).First();
                 DateTime day = new DateTime(DateTime.Today.Year, recurrencePattern.ByMonth.First(), 1);
                 return String.Format(Language.YearlyOnNumbered,
                     TranslateSetPosNumber(recurrencePattern.BySetPosition.First()),
-                    GetDayOfWeekString(dayOfWeek),
+                    GetDayOrDayDescription(),
                     day.ToString(Language.YearlyOnNumberedMonthFormat, Language.Culture));
             }
 
@@ -451,24 +489,9 @@ namespace IcgSoftware.RecurrenceRuleToText
 
             public string GetDayOfWeekString(DayOfWeek dayOfWeek)
             {
-                switch (dayOfWeek)
-                {
-                    case DayOfWeek.Monday:
-                        return Language.Monday;
-                    case DayOfWeek.Tuesday:
-                        return Language.Tuesday;
-                    case DayOfWeek.Wednesday:
-                        return Language.Wednesday;
-                    case DayOfWeek.Thursday:
-                        return Language.Thursday;
-                    case DayOfWeek.Friday:
-                        return Language.Friday;
-                    case DayOfWeek.Saturday:
-                        return Language.Saturday;
-                    case DayOfWeek.Sunday:
-                    default:
-                        return Language.Sunday;
-                }
+                return displayOptions.ShortWeekdays 
+                    ? ordinalCulture.DateTimeFormat.ShortestDayNames[(int)dayOfWeek] 
+                    : ordinalCulture.DateTimeFormat.DayNames[(int)dayOfWeek];
             }
 
         }

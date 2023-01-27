@@ -7,11 +7,13 @@
     <Company>IcgSoftware</Company>
     <Description>Human readable extension for iCal.NET RecurrencePattern https://github.com/rianjs/ical.net</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/pt-icg/RecurrenceRuleToText</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/pt-icg/RecurrenceRuleToText</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/RECOMGmbH/RecurrenceRuleToText</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/RECOMGmbH/RecurrenceRuleToText</RepositoryUrl>
     <PackageTags>icalendar ical ical.net recurrence rrule recurrence-rules human-readable multi-language-support ical-net-extension c# net csharp</PackageTags>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <FileVersion>1.0.2.0</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageVersion>1.0.2-recom</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -10,6 +10,8 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
 
         abstract protected void ToTextTest(string rRuleString, string readableString);
 
+        abstract protected void ToTextTestWithShortWeekday(string rRuleString, string readableString);
+        
         protected class RRuleTextBuilderTestHelper
         {
             private RecurrencePattern recurrencePattern;
@@ -28,15 +30,16 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
                 ReadableResult = recurrencePattern.ToText();
             }
 
-            public RRuleTextBuilderTestHelper(string rRuleString, string readableString, string culture)
+            public RRuleTextBuilderTestHelper(string rRuleString, string readableString, string culture, DisplayOptions options = null)
             {
-
+                options = options ?? new DisplayOptions();
+                
                 RRuleString = rRuleString;
                 ReadableString = readableString;
                 string rRuleStringC = RRuleTextBuilder.GetRRuleStringCorrection(rRuleString);
                 recurrencePattern = new RecurrencePattern(rRuleStringC);
                 RecreatedRRuleString = recurrencePattern.ToString();
-                ReadableResult = recurrencePattern.ToText(new CultureInfo(culture));
+                ReadableResult = recurrencePattern.ToText(new CultureInfo(culture), options);
             }
 
             public bool Result { get => ReadableString == ReadableResult; }

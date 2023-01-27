@@ -17,6 +17,13 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             var rRuleTextBuilderTest = new RRuleTextBuilderTestHelper(rRuleString, readableString, "es");
             Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
         }
+        
+        protected override void ToTextTestWithShortWeekday(string rRuleString, string readableString)
+        {
+            Debug.WriteLine("ES: " + readableString);
+            var rRuleTextBuilderTest = new RRuleTextBuilderTestHelper(rRuleString, readableString, "es", new DisplayOptions(){ShortWeekdays = true});
+            Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
+        }
 
         [TestMethod]
         public void LastNumeral()
@@ -24,7 +31,7 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             ToTextTest("RRULE:FREQ=MONTHLY;BYDAY=-1MO", "cada mes el último lunes");
             ToTextTest("RRULE:FREQ=MONTHLY;BYDAY=-2MO", "cada mes el penúltimo lunes");
             ToTextTest("RRULE:FREQ=MONTHLY;BYDAY=-3FR", "cada mes el tercer último viernes");
-            ToTextTest("RRULE:FREQ=MONTHLY;BYDAY=-4SU", "cada mes el cuarto último domingos");
+            ToTextTest("RRULE:FREQ=MONTHLY;BYDAY=-4SU", "cada mes el cuarto último domingo");
         }
 
         [TestMethod]
@@ -44,7 +51,7 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
 
             ToTextTest("FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU", "cada semana los lunes, martes");
             ToTextTest("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,TU", "cada 2 semanas los lunes, martes");
-            ToTextTest("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,TU,WE,SA", "cada 2 semanas los lunes, martes, miércoles, sábados");
+            ToTextTest("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,TU,WE,SA", "cada 2 semanas los lunes, martes, miércoles, sábado");
 
             ToTextTest("FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=5", "cada mes el 5º");
             ToTextTest("FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=15", "cada mes el 15º");
@@ -52,12 +59,12 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
 
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=MO;BYSETPOS=-1", "cada 2 meses el último lunes");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=MO;BYSETPOS=1", "cada 2 meses el primer lunes");
-            ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=SA;BYSETPOS=3", "cada 2 meses el tercer sábados");
+            ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=SA;BYSETPOS=3", "cada 2 meses el tercer sábado");
 
             ToTextTest("FREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1", "cada año el 1º de enero");
             ToTextTest("FREQ=YEARLY;BYMONTH=4;BYMONTHDAY=5", "cada año el 5º de abril");
 
-            ToTextTest("FREQ=YEARLY;BYDAY=SU;BYSETPOS=1;BYMONTH=1", "cada año el primer domingos de enero");
+            ToTextTest("FREQ=YEARLY;BYDAY=SU;BYSETPOS=1;BYMONTH=1", "cada año el primer domingo de enero");
             ToTextTest("FREQ=YEARLY;BYDAY=WE;BYSETPOS=-1;BYMONTH=4", "cada año el último miércoles de abril");
 
             ToTextTest("FREQ=DAILY;INTERVAL=1;COUNT=2", "cada día un total de 2 veces"); 
@@ -71,7 +78,7 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
         {
             ToTextTest("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=MO;BYDAY=FR,TH,MO,TU,WE", "todos los días de la semana un total de 30 veces");
             ToTextTest("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=MO;BYDAY=FR,TU,WE,TH", "cada semana los martes, miércoles, jueves, viernes un total de 30 veces");            
-            ToTextTest("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=SU;BYDAY=FR,TU,WE,TH,SU", "cada semana los domingos, martes, miércoles, jueves, viernes un total de 30 veces");
+            ToTextTest("FREQ=WEEKLY;COUNT=30;INTERVAL=1;WKST=SU;BYDAY=FR,TU,WE,TH,SU", "cada semana los domingo, martes, miércoles, jueves, viernes un total de 30 veces");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=1", "cada 2 meses el primer viernes");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=2", "cada 2 meses el segundo viernes");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=3", "cada 2 meses el tercer viernes");
@@ -108,6 +115,22 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             ToTextTest("RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU", "cada 2 semanas los martes");
         }
 
-
+        [TestMethod]
+        public void YearlyDay()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=SU,MO,TU,WE,TH,FR,SA;BYMONTH=1;BYSETPOS=1", "cada año el primer día de enero");
+        }
+        
+        [TestMethod]
+        public void YearlyWeekday()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=MO,TU,WE,TH,FR;BYMONTH=1;BYSETPOS=1", "cada año el primer día laborable de enero");
+        }
+        
+        [TestMethod]
+        public void YearlyWeekendDay()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=SU,SA;BYMONTH=1;BYSETPOS=1", "cada año el primer día del fin de semana de enero");
+        }
     }
 }

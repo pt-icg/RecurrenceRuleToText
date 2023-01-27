@@ -18,6 +18,13 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
         }
 
+        protected override void ToTextTestWithShortWeekday(string rRuleString, string readableString)
+        {
+            Debug.WriteLine("IV: " + readableString);
+            var rRuleTextBuilderTest = new RRuleTextBuilderTestHelper(rRuleString, readableString, "", new DisplayOptions(){ShortWeekdays = true});
+            Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
+        }
+
         [TestMethod]
         public void InvariantCulture()
         {

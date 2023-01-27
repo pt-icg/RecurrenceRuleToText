@@ -18,6 +18,13 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
         }
 
+        protected override void ToTextTestWithShortWeekday(string rRuleString, string readableString)
+        {
+            Debug.WriteLine("DE: " + readableString);
+            var rRuleTextBuilderTest = new RRuleTextBuilderTestHelper(rRuleString, readableString, "de", new DisplayOptions(){ShortWeekdays = true});
+            Assert.IsTrue(rRuleTextBuilderTest.Result, rRuleTextBuilderTest.ResultMessage);
+        }
+        
         [TestMethod]
         public void LastNumeral()
         {
@@ -25,6 +32,11 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             ToTextTest("RRULE:FREQ=MONTHLY;BYDAY=-2MO", "monatlich am vorletzten Montag");
             ToTextTest("RRULE:FREQ=MONTHLY;BYDAY=-3FR", "monatlich am drittletzten Freitag");
             ToTextTest("RRULE:FREQ=MONTHLY;BYDAY=-4SU", "monatlich am viertletzten Sonntag");
+            
+            ToTextTestWithShortWeekday("RRULE:FREQ=MONTHLY;BYDAY=-1MO", "monatlich am letzten Mo");
+            ToTextTestWithShortWeekday("RRULE:FREQ=MONTHLY;BYDAY=-2MO", "monatlich am vorletzten Mo");
+            ToTextTestWithShortWeekday("RRULE:FREQ=MONTHLY;BYDAY=-3FR", "monatlich am drittletzten Fr");
+            ToTextTestWithShortWeekday("RRULE:FREQ=MONTHLY;BYDAY=-4SU", "monatlich am viertletzten So");
         }
 
         [TestMethod]
@@ -44,7 +56,7 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
 
             ToTextTest("FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU", "wöchentlich am Montag, Dienstag");
             ToTextTest("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,TU", "alle 2 Wochen am Montag, Dienstag");
-            ToTextTest("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,TU,WE,SA", "alle 2 Wochen am Montag, Dienstag, Mittwoch, Sonnabend");
+            ToTextTest("FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,TU,WE,SA", "alle 2 Wochen am Montag, Dienstag, Mittwoch, Samstag");
 
             ToTextTest("FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=5", "monatlich am 5.");
             ToTextTest("FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=15", "monatlich am 15.");
@@ -52,7 +64,11 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
 
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=MO;BYSETPOS=-1", "alle 2 Monate am letzten Montag");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=MO;BYSETPOS=1", "alle 2 Monate am ersten Montag");
-            ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=SA;BYSETPOS=3", "alle 2 Monate am dritten Sonnabend");
+            ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=SA;BYSETPOS=3", "alle 2 Monate am dritten Samstag");
+
+            ToTextTestWithShortWeekday("FREQ=MONTHLY;INTERVAL=2;BYDAY=MO;BYSETPOS=-1", "alle 2 Monate am letzten Mo");
+            ToTextTestWithShortWeekday("FREQ=MONTHLY;INTERVAL=2;BYDAY=MO;BYSETPOS=1", "alle 2 Monate am ersten Mo");
+            ToTextTestWithShortWeekday("FREQ=MONTHLY;INTERVAL=2;BYDAY=SA;BYSETPOS=3", "alle 2 Monate am dritten Sa");
 
             ToTextTest("FREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1", "jährlich am 01. Januar");
             ToTextTest("FREQ=YEARLY;BYMONTH=4;BYMONTHDAY=5", "jährlich am 05. April");
@@ -76,6 +92,7 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=2", "alle 2 Monate am zweiten Freitag");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=3", "alle 2 Monate am dritten Freitag");
             ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=4", "alle 2 Monate am vierten Freitag");
+            ToTextTestWithShortWeekday("FREQ=MONTHLY;INTERVAL=2;BYDAY=FR;BYSETPOS=4", "alle 2 Monate am vierten Fr");
             ToTextTest("FREQ=YEARLY;INTERVAL=3;BYMONTH=3,4", "alle 3 Jahre im März und April");
         }
 
@@ -108,6 +125,49 @@ namespace IcgSoftware.RecurrenceRuleToText.UnitTest
             ToTextTest("RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU", "alle 2 Wochen am Dienstag");
         }
 
-
+        [TestMethod]
+        public void NumeralMonthlyDay()
+        {
+            ToTextTest("FREQ=MONTHLY;BYDAY=SU,MO,TU,WE,TH,FR,SA;BYSETPOS=1", "monatlich am ersten Tag");
+            ToTextTest("FREQ=MONTHLY;BYDAY=SU,MO,TU,WE,TH,FR,SA;BYSETPOS=2", "monatlich am zweiten Tag");
+            ToTextTest("FREQ=MONTHLY;BYDAY=SU,MO,TU,WE,TH,FR,SA;BYSETPOS=-1", "monatlich am letzten Tag");
+            ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=SU,MO,TU,WE,TH,FR,SA;BYSETPOS=-1", "alle 2 Monate am letzten Tag");
+        }
+        
+        [TestMethod]
+        public void NumeralMonthlyWeekday()
+        {
+            ToTextTest("FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=1", "monatlich am ersten Wochentag");
+            ToTextTest("FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=2", "monatlich am zweiten Wochentag");
+            ToTextTest("FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1", "monatlich am letzten Wochentag");
+            ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1", "alle 2 Monate am letzten Wochentag");
+        }
+        
+        [TestMethod]
+        public void NumeralMonthlyWeekendDay()
+        {
+            ToTextTest("FREQ=MONTHLY;BYDAY=SU,SA;BYSETPOS=1", "monatlich am ersten Wochenendtag");
+            ToTextTest("FREQ=MONTHLY;BYDAY=SU,SA;BYSETPOS=2", "monatlich am zweiten Wochenendtag");
+            ToTextTest("FREQ=MONTHLY;BYDAY=SU,SA;BYSETPOS=-1", "monatlich am letzten Wochenendtag");
+            ToTextTest("FREQ=MONTHLY;INTERVAL=2;BYDAY=SU,SA;BYSETPOS=-1", "alle 2 Monate am letzten Wochenendtag");
+        }
+        
+        [TestMethod]
+        public void YearlyDay()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=SU,MO,TU,WE,TH,FR,SA;BYMONTH=1;BYSETPOS=1", "jährlich am ersten Tag im Januar");
+        }
+        
+        [TestMethod]
+        public void YearlyWeekday()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=MO,TU,WE,TH,FR;BYMONTH=1;BYSETPOS=1", "jährlich am ersten Wochentag im Januar");
+        }
+        
+        [TestMethod]
+        public void YearlyWeekendDay()
+        {
+            ToTextTest("FREQ=YEARLY;BYDAY=SU,SA;BYMONTH=1;BYSETPOS=1", "jährlich am ersten Wochenendtag im Januar");
+        }
     }
 }
