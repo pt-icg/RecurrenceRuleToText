@@ -186,7 +186,7 @@
     <value>Freitag</value>
   </data>
   <data name="Saturday" xml:space="preserve">
-    <value>Sonnabend</value>
+    <value>Samstag</value>
   </data>
   <data name="Sunday" xml:space="preserve">
     <value>Sonntag</value>
